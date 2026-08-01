@@ -6,9 +6,9 @@ import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const navigationLinks = [
   ['Services', '/services'],
-  ['Work', '/portfolio'],
-  ['About', '/about'],
   ['Technologies', '/technologies'],
+  ['About', '/about'],
+  ['Contact', '/contact'],
 ] as const;
 
 export function Navbar() {

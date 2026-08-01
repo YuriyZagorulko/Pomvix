@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Hero } from '@/components/hero';
 import { Section } from '@/components/section';
 import { ServiceCards, WorkCards } from '@/components/cards';
@@ -44,9 +44,6 @@ export default function Home() {
         title="A small selection of things we've helped bring to life."
       >
         <WorkCards />
-        <Link href="/portfolio" className="button button-ghost mt-8">
-          View all work <ArrowRight size={15} />
-        </Link>
       </Section>
       <section className="shell pb-32">
         <div className="card relative overflow-hidden p-10 md:p-16">

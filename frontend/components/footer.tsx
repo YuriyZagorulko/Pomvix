@@ -17,7 +17,6 @@ export function Footer() {
           <p className="eyebrow mb-5">Explore</p>
           <div className="flex flex-col gap-3 text-sm text-slate-400">
             <Link href="/services">Services</Link>
-            <Link href="/portfolio">Work</Link>
             <Link href="/about">About us</Link>
           </div>
         </div>

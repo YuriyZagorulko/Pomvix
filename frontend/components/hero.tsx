@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 export function Hero() {
   return (
     <section className="grid-bg relative overflow-hidden pt-40 pb-24 md:pt-52 md:pb-36">
@@ -18,9 +18,6 @@ export function Hero() {
           <div className="mt-10 flex flex-wrap gap-4">
             <Link href="/contact" className="button button-primary">
               Tell us about your idea <ArrowRight size={16} />
-            </Link>
-            <Link href="/portfolio" className="button button-ghost">
-              <Play size={14} /> Explore our work
             </Link>
           </div>
         </div>
