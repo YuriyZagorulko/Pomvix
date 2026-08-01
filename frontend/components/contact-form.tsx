@@ -74,7 +74,7 @@ export function ContactForm() {
         />
       </label>
       {state === 'error' && (
-        <p className="text-sm text-rose-300">
+        <p className="text-sm text-lavender">
           Something went wrong. Please email us directly at hello@pomvix.com.
         </p>
       )}

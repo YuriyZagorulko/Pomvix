@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import CursorGrid from '@/components/cursor-grid';
 export function Hero() {
   return (
     <section className="grid-bg relative overflow-hidden pt-40 pb-24 md:pt-52 md:pb-36">
+      <CursorGrid />
       <div className="orb absolute -right-24 top-24 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl" />
       <div className="orb absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-teal-300/[.07] blur-3xl" />
       <div className="shell relative">
