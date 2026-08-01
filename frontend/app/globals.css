@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --ink: #060816;
+  --ink-soft: #0a1022;
+  --panel: #121b34;
+  --line: rgba(159, 177, 227, 0.16);
+  --lavender: #a9b7ff;
+  --mint: #95e4ce;
+  --periwinkle: #8294e8;
+  --muted: #a6b0cb;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  background: var(--ink);
+  color: #f3f5ff;
+  font-family: var(--font-manrope), Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.28;
+  background-image:
+    radial-gradient(rgba(192, 204, 255, 0.5) 1px, transparent 1px),
+    radial-gradient(rgba(149, 228, 206, 0.25) 1px, transparent 1px);
+  background-position:
+    20px 40px,
+    100px 80px;
+  background-size:
+    150px 150px,
+    230px 230px;
+  mask-image: linear-gradient(to bottom, black, transparent 80%);
+}
+.shell {
+  max-width: 1180px;
+  margin: auto;
+  padding: 0 28px;
+}
+.eyebrow {
+  color: var(--mint);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.gradient-text {
+  background: linear-gradient(110deg, #f4f5ff 25%, var(--lavender) 65%, var(--mint));
+  background-clip: text;
+  color: transparent;
+  -webkit-background-clip: text;
+}
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(150, 170, 230, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 170, 230, 0.045) 1px, transparent 1px);
+  background-size: 70px 70px;
+}
+.card {
+  background: linear-gradient(145deg, rgba(21, 32, 62, 0.86), rgba(11, 17, 38, 0.78));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 14px 21px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: 0.25s ease;
+}
+.button-primary {
+  background: #edf0ff;
+  color: #10152a;
+}
+.button-primary:hover {
+  box-shadow: 0 0 30px rgba(169, 183, 255, 0.28);
+  transform: translateY(-2px);
+}
+.button-ghost {
+  border: 1px solid rgba(169, 183, 255, 0.3);
+  color: #e7eaff;
+}
+.button-ghost:hover {
+  background: rgba(169, 183, 255, 0.1);
+  border-color: var(--lavender);
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(22px, -15px);
+  }
+}
+.orb {
+  animation: drift 12s ease-in-out infinite;
+}
+.reveal {
+  animation: reveal 0.8s ease both;
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 640px) {
+  .shell {
+    padding: 0 20px;
+  }
+  body {
+    font-size: 15px;
+  }
+}

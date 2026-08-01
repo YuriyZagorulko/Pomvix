@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER:-pomvix}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-pomvix}"
+      POSTGRES_DB: "${POSTGRES_DB:-pomvix}"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pomvix"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    env_file:
+      - path: .env
+        required: false
+    depends_on:
+      db:
+        condition: service_healthy
+  frontend:
+    build: ./frontend
+    environment:
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost:8000}"
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+volumes:
+  postgres_data:
