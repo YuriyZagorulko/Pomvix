@@ -1,21 +1,59 @@
 from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
+
 from app.api.v1.contact import router as contact_router
 from app.core.config import settings
-from app.models.contact import Base
+from app.core.limiter import limiter
 from app.db.session import engine
+from app.models.contact import Base
+
+
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    async with engine.begin() as conn: await conn.run_sync(Base.metadata.create_all)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
     yield
-limiter=Limiter(key_func=get_remote_address)
-app=FastAPI(title="Pomvix API", version="1.0.0", docs_url="/docs", lifespan=lifespan)
-app.state.limiter=limiter; app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
-app.add_middleware(CORSMiddleware, allow_origins=[settings.frontend_url], allow_credentials=True, allow_methods=["POST"], allow_headers=["*"])
-app.include_router(contact_router, prefix="/api/v1")
+
+
+app = FastAPI(
+    title="Pomvix API",
+    version="1.0.0",
+    docs_url="/docs" if settings.docs_enabled else None,
+    redoc_url="/redoc" if settings.docs_enabled else None,
+    openapi_url="/openapi.json" if settings.docs_enabled else None,
+    lifespan=lifespan,
+)
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origin_list,
+    allow_credentials=True,
+    allow_methods=["POST"],
+    allow_headers=["*"],
+)
+
+
+@app.middleware("http")
+async def security_headers(request, call_next):
+    """Apply baseline security headers to every response."""
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "SAMEORIGIN"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    return response
+
+
+app.include_router(contact_router, prefix=settings.api_v1_prefix)
+
+
 @app.get("/health")
-async def health(): return {"status":"ok"}
+async def health():
+    return {"status": "ok"}

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Mail, MapPin } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { ContactForm } from '@/components/contact-form';
+import { siteConfig } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Start a conversation with the Pomvix team.',
@@ -20,8 +21,8 @@ export default function Contact() {
           <div>
             <Mail className="text-mint" size={21} />
             <h3 className="mt-5">Email us</h3>
-            <a className="mt-2 block text-slate-400" href="mailto:hello@pomvix.com">
-              hello@pomvix.com
+            <a className="mt-2 block text-slate-400" href={`mailto:${siteConfig.contactEmail}`}>
+              {siteConfig.contactEmail}
             </a>
           </div>
           <div>

@@ -1,6 +1,7 @@
 'use client';
 import { FormEvent, useState } from 'react';
 import { ArrowRight, Check, LoaderCircle } from 'lucide-react';
+import { siteConfig } from '@/lib/site';
 export function ContactForm() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   async function submit(e: FormEvent<HTMLFormElement>) {
@@ -8,14 +9,11 @@ export function ContactForm() {
     setState('loading');
     const body = Object.fromEntries(new FormData(e.currentTarget));
     try {
-      const r = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/contact`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        },
-      );
+      const r = await fetch(`${siteConfig.apiUrl}/api/v1/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
       if (!r.ok) throw Error();
       setState('success');
     } catch {
@@ -75,7 +73,7 @@ export function ContactForm() {
       </label>
       {state === 'error' && (
         <p className="text-sm text-lavender">
-          Something went wrong. Please email us directly at hello@pomvix.com.
+          Something went wrong. Please email us directly at {siteConfig.contactEmail}.
         </p>
       )}
       <button disabled={state === 'loading'} className="button button-primary">

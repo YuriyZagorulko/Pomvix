@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+import { siteConfig } from '@/lib/site';
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
 export const metadata: Metadata = {
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   },
   description:
     'Pomvix builds thoughtful software, SaaS platforms, and AI products for ambitious teams.',
-  metadataBase: new URL('https://pomvix.com'),
+  metadataBase: new URL(siteConfig.url),
   alternates: { canonical: '/' },
   icons: {
     icon: '/icon.webp',

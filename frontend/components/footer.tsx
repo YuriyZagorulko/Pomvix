@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
+import { siteConfig } from '@/lib/site';
 export function Footer() {
   return (
     <footer className="border-t border-white/[.08] py-14">
@@ -23,7 +24,7 @@ export function Footer() {
         <div>
           <p className="eyebrow mb-5">Connect</p>
           <div className="flex flex-col gap-3 text-sm text-slate-400">
-            <a href="mailto:hello@pomvix.com">hello@pomvix.com</a>
+            <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
             <a href="https://linkedin.com" target="_blank">
               LinkedIn <ArrowUpRight size={13} className="inline" />
             </a>
