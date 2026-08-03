@@ -52,3 +52,4 @@ Thumbs.db
 
 # Docker local overrides
 docker-compose.override.yml
+.aider*
