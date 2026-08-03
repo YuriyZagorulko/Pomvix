@@ -8,14 +8,11 @@ from slowapi.errors import RateLimitExceeded
 from app.api.v1.contact import router as contact_router
 from app.core.config import settings
 from app.core.limiter import limiter
-from app.db.session import engine
-from app.models.contact import Base
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+    # Schema management is performed explicitly by Alembic during deployment.
     yield
 
 
@@ -48,6 +45,9 @@ async def security_headers(request, call_next):
     response.headers["X-Frame-Options"] = "SAMEORIGIN"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'"
+    )
     return response
 
 

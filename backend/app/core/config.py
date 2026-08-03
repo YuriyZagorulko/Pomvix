@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-from pydantic import Field
+from pydantic import Field, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -40,6 +40,32 @@ class Settings(BaseSettings):
     api_v1_prefix: str = Field(default="/api/v1")
     docs_enabled: bool = Field(default=False, description="Expose /docs and /redoc (disable in production)")
     rate_limit: str = Field(default="5/minute", description="Contact endpoint rate limit, e.g. 5/minute")
+
+    @model_validator(mode="after")
+    def validate_production_configuration(self) -> "Settings":
+        """Reject incomplete production configuration before the app starts."""
+        if self.is_production:
+            required = {
+                "SMTP_HOST": self.smtp_host,
+                "SMTP_USERNAME": self.smtp_username,
+                "SMTP_PASSWORD": self.smtp_password,
+                "EMAIL_FROM": self.email_from,
+                "EMAIL_TO": self.email_to,
+            }
+            missing = [name for name, value in required.items() if not value.strip()]
+            if missing:
+                raise ValueError(
+                    "Missing required production configuration: " + ", ".join(missing)
+                )
+            if self.debug:
+                raise ValueError("DEBUG must be false in production")
+            if self.docs_enabled:
+                raise ValueError("DOCS_ENABLED must be false in production")
+            if not self.cookie_secure:
+                raise ValueError("COOKIE_SECURE must be true in production")
+            if not self.frontend_url.startswith("https://"):
+                raise ValueError("FRONTEND_URL must use HTTPS in production")
+        return self
 
     model_config = SettingsConfigDict(
         env_file=".env",

@@ -5,6 +5,7 @@ import { PageHero } from '@/components/page-hero';
 export const metadata: Metadata = {
   title: 'Services',
   description: 'Software product design and engineering services from Pomvix.',
+  alternates: { canonical: '/services' },
 };
 export default function Services() {
   return (

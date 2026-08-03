@@ -5,6 +5,7 @@ import { Section } from '@/components/section';
 export const metadata: Metadata = {
   title: 'Technologies',
   description: 'A modern, considered technology stack for reliable digital products.',
+  alternates: { canonical: '/technologies' },
 };
 const groups = [
   ['Frontend', Code2, ['React', 'Next.js', 'TypeScript', 'Tailwind CSS']],
