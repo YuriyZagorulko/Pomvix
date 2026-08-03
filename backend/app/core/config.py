@@ -1,6 +1,7 @@
 from functools import lru_cache
+from urllib.parse import urlparse
 
-from pydantic import Field, model_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -41,38 +42,51 @@ class Settings(BaseSettings):
     docs_enabled: bool = Field(default=False, description="Expose /docs and /redoc (disable in production)")
     rate_limit: str = Field(default="5/minute", description="Contact endpoint rate limit, e.g. 5/minute")
 
-    @model_validator(mode="after")
-    def validate_production_configuration(self) -> "Settings":
-        """Reject incomplete production configuration before the app starts."""
-        if self.is_production:
-            required = {
-                "SMTP_HOST": self.smtp_host,
-                "SMTP_USERNAME": self.smtp_username,
-                "SMTP_PASSWORD": self.smtp_password,
-                "EMAIL_FROM": self.email_from,
-                "EMAIL_TO": self.email_to,
-            }
-            missing = [name for name, value in required.items() if not value.strip()]
-            if missing:
-                raise ValueError(
-                    "Missing required production configuration: " + ", ".join(missing)
-                )
-            if self.debug:
-                raise ValueError("DEBUG must be false in production")
-            if self.docs_enabled:
-                raise ValueError("DOCS_ENABLED must be false in production")
-            if not self.cookie_secure:
-                raise ValueError("COOKIE_SECURE must be true in production")
-            if not self.frontend_url.startswith("https://"):
-                raise ValueError("FRONTEND_URL must use HTTPS in production")
-        return self
-
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
     )
+
+    @field_validator("environment")
+    @classmethod
+    def validate_environment(cls, value: str) -> str:
+        normalized = value.lower().strip()
+        if normalized not in {"development", "production", "test"}:
+            raise ValueError("ENVIRONMENT must be development, production, or test")
+        return normalized
+
+    @field_validator("frontend_url")
+    @classmethod
+    def validate_frontend_url(cls, value: str) -> str:
+        parsed = urlparse(value)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            raise ValueError("FRONTEND_URL must be an absolute HTTP(S) URL")
+        return value.rstrip("/")
+
+    @model_validator(mode="after")
+    def validate_production_settings(self) -> "Settings":
+        if not self.is_production:
+            return self
+
+        if self.debug:
+            raise ValueError("DEBUG must be false in production")
+        if not self.cookie_secure:
+            raise ValueError("COOKIE_SECURE must be true in production")
+        if not self.database_url.startswith("postgresql+asyncpg://"):
+            raise ValueError("DATABASE_URL must use postgresql+asyncpg in production")
+        if len(self.secret_key) < 32 or self.secret_key.startswith("CHANGE_ME"):
+            raise ValueError("SECRET_KEY must be a real value of at least 32 characters")
+        if self.frontend_url.startswith("http://"):
+            raise ValueError("FRONTEND_URL must use HTTPS in production")
+        if self.smtp_host and (not self.smtp_username or not self.smtp_password):
+            raise ValueError("SMTP_USERNAME and SMTP_PASSWORD are required when SMTP_HOST is set")
+        for field_name in ("email_from", "email_to"):
+            value = getattr(self, field_name)
+            if "@" not in value or value.startswith("CHANGE_ME"):
+                raise ValueError(f"{field_name.upper()} must be a valid email address")
+        return self
 
     @property
     def cors_origin_list(self) -> list[str]:

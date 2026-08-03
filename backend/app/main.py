@@ -1,13 +1,15 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
 from app.api.v1.contact import router as contact_router
 from app.core.config import settings
 from app.core.limiter import limiter
+from app.db.session import engine
 
 
 @asynccontextmanager
@@ -56,4 +58,10 @@ app.include_router(contact_router, prefix=settings.api_v1_prefix)
 
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    """Return healthy only when the API can reach its database."""
+    try:
+        async with engine.connect() as connection:
+            await connection.execute(text("SELECT 1"))
+    except Exception as exc:  # pragma: no cover - the failure is infrastructure-dependent
+        raise HTTPException(status_code=503, detail="database unavailable") from exc
+    return {"status": "ok", "database": "ok"}

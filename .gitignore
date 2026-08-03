@@ -33,6 +33,8 @@ build/
 *.sqlite3
 *.db
 *.log
+backups/
+deployment-*.log
 
 # Coverage and tooling
 .coverage
