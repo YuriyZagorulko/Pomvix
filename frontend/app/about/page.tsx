@@ -4,6 +4,7 @@ import { Section } from '@/components/section';
 export const metadata: Metadata = {
   title: 'About',
   description: 'Meet Pomvix, an independent software studio for ambitious teams.',
+  alternates: { canonical: '/about' },
 };
 export default function About() {
   return (

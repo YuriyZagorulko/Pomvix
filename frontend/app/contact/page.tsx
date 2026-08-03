@@ -6,6 +6,7 @@ import { siteConfig } from '@/lib/site';
 export const metadata: Metadata = {
   title: 'Contact',
   description: 'Start a conversation with the Pomvix team.',
+  alternates: { canonical: '/contact' },
 };
 export default function Contact() {
   return (

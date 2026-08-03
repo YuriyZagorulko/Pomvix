@@ -25,14 +25,28 @@ export const metadata: Metadata = {
     title: 'Pomvix — Software that moves businesses forward',
     description: 'Digital products engineered for what comes next.',
     type: 'website',
+    siteName: 'Pomvix',
+    locale: 'en_US',
+    url: '/',
+    images: [{ url: '/logo.png', alt: 'Pomvix' }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', title: 'Pomvix — Software that moves businesses forward', images: ['/logo.png'] },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={manrope.variable}>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': [
+              { '@type': 'Organization', name: 'Pomvix', url: siteConfig.url, logo: `${siteConfig.url}/logo.png`, email: `mailto:${siteConfig.contactEmail}` },
+              { '@type': 'WebSite', name: 'Pomvix', url: siteConfig.url },
+              { '@type': 'ProfessionalService', name: 'Pomvix', url: siteConfig.url, email: `mailto:${siteConfig.contactEmail}` },
+            ],
+          })
+        }} />
         <Navbar />
         {children}
         <Footer />
