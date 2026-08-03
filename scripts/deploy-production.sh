@@ -22,7 +22,7 @@ exec 9>/tmp/pomvix-production-deploy.lock
 flock -n 9 || { echo '[FAIL] another production deployment is already running' >&2; exit 1; }
 
 step 'Validate production configuration before touching services'
-./scripts/validate-production-env.sh "$ENV_FILE"
+bash ./scripts/validate-production-env.sh "$ENV_FILE"
 "${COMPOSE[@]}" config --quiet
 
 step 'Build immutable application images'
@@ -68,5 +68,5 @@ for service in db backend frontend; do
 done
 curl --fail --silent --show-error http://127.0.0.1:8000/health >/dev/null
 curl --fail --silent --show-error http://127.0.0.1:3000/ >/dev/null
-./scripts/smoke-test-production.sh
+bash ./scripts/smoke-test-production.sh
 printf '\n[OK] production deployment completed and all services are healthy\n'
