@@ -1,1 +1,76 @@
-complete file contents
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script_stop: true
+          command_timeout: 30m
+          script: |
+            set -Eeuo pipefail
+
+            APP_DIR="/home/yuri/pomvix"
+            COMPOSE_FILE="docker-compose.prod.yml"
+
+            on_error() {
+              exit_code=$?
+              echo ""
+              echo "Deployment failed with exit code ${exit_code}."
+              echo "Docker Compose service status:"
+              docker compose -f "${COMPOSE_FILE}" ps || true
+              echo "Recent backend logs:"
+              docker compose -f "${COMPOSE_FILE}" logs --no-color --tail=100 backend || true
+              echo "Recent frontend logs:"
+              docker compose -f "${COMPOSE_FILE}" logs --no-color --tail=100 frontend || true
+              exit "${exit_code}"
+            }
+
+            trap on_error ERR
+
+            echo "Changing to ${APP_DIR}"
+            cd "${APP_DIR}"
+
+            echo "Current revision before deployment:"
+            git rev-parse --short HEAD
+
+            echo "Pulling the latest main branch..."
+            git pull origin main
+
+            echo "Current revision after pull:"
+            git rev-parse --short HEAD
+
+            echo "Building production images..."
+            docker compose -f "${COMPOSE_FILE}" build
+
+            echo "Running Alembic migrations..."
+            docker compose -f "${COMPOSE_FILE}" run --rm backend alembic upgrade head
+
+            echo "Starting production services..."
+            docker compose -f "${COMPOSE_FILE}" up -d
+
+            echo "Production service status:"
+            docker compose -f "${COMPOSE_FILE}" ps
+
+            echo "Production deployment completed successfully."

@@ -26,8 +26,10 @@ WORKDIR /app
 # Copy only the installed dependencies from the builder stage.
 COPY --from=builder /install /usr/local
 
-# Copy application code (no build tooling, no dev dependencies).
+# Copy application code and migration configuration.
 COPY app ./app
+COPY alembic ./alembic
+COPY alembic.ini .
 
 USER app
 
