@@ -84,7 +84,7 @@ export default function Process() {
         title="The process adapts without becoming vague."
         className="border-y border-white/[.06] bg-white/[.015]"
       >
-        <div className="max-w-3xl space-y-6 text-slate-400">
+        <div className="max-w-3xl space-y-6 text-slate-400 mt-7">
           <p className="leading-8">
             Every project has different risks. A startup MVP may spend more time defining the
             learning goal, while backend modernization may start with system behavior and failure

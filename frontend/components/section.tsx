@@ -10,7 +10,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section className={`py-24 md:py-32 ${className}`}>
+    <section className={`py-24 md:py-16 ${className}`}>
       <div className="shell">
         {eyebrow && <p className="eyebrow mb-5">{eyebrow}</p>}
         <h2 className="max-w-3xl text-3xl font-semibold md:text-5xl">{title}</h2>

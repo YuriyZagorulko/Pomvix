@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
+import { Accordion } from '@/components/accordion';
 import { faqGroups } from '@/lib/faq';
 import { faqJsonLd, pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata: Metadata = pageMetadata(
@@ -32,12 +33,9 @@ export default function FAQ() {
         <Section eyebrow="Pomvix FAQ" title={group.title} key={group.title}>
           <div className="mt-10 max-w-4xl space-y-3">
             {group.items.map((faq) => (
-              <details className="card p-6" key={faq.question}>
-                <summary className="cursor-pointer list-none pr-6 text-lg font-medium">
-                  {faq.question}
-                </summary>
-                <p className="mt-4 leading-7 text-slate-400">{faq.answer}</p>
-              </details>
+              <Accordion title={faq.question} key={faq.question}>
+                <p className="leading-7 text-slate-400">{faq.answer}</p>
+              </Accordion>
             ))}
           </div>
         </Section>

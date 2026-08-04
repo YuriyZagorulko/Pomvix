@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
+import { Accordion } from '@/components/accordion';
 import { serviceJsonLd } from '@/lib/seo';
 import { services, type Service } from '@/lib/services';
 
@@ -188,12 +189,9 @@ export function ServicePage({ service }: { service: Service }) {
       >
         <div className="mt-10 max-w-3xl space-y-3">
           {service.faqs.map((faq) => (
-            <details className="card p-6" key={faq.question}>
-              <summary className="cursor-pointer list-none pr-6 text-lg font-medium">
-                {faq.question}
-              </summary>
-              <p className="mt-4 leading-7 text-slate-400">{faq.answer}</p>
-            </details>
+            <Accordion title={faq.question} key={faq.question}>
+              <p className="leading-7 text-slate-400">{faq.answer}</p>
+            </Accordion>
           ))}
         </div>
       </Section>

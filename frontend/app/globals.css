@@ -79,6 +79,83 @@ body::before {
   border: 1px solid var(--line);
   border-radius: 18px;
 }
+.accordion {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(21, 32, 62, 0.86), rgba(11, 17, 38, 0.78));
+  transition:
+    border-color 220ms ease,
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+.accordion:hover {
+  border-color: rgba(169, 183, 255, 0.38);
+  background-color: rgba(24, 36, 70, 0.88);
+}
+.accordion--open {
+  border-color: rgba(149, 228, 206, 0.32);
+  box-shadow: 0 14px 40px rgba(3, 7, 20, 0.18);
+}
+.accordion__summary {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.accordion__summary:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: -3px;
+}
+.accordion__title {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+.accordion__chevron {
+  flex: 0 0 auto;
+  color: var(--lavender);
+  transition:
+    transform 220ms ease,
+    color 220ms ease;
+}
+.accordion--open .accordion__chevron {
+  transform: rotate(180deg);
+  color: var(--mint);
+}
+.accordion__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 240ms ease,
+    opacity 240ms ease;
+}
+.accordion--open .accordion__body {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.accordion__inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 24px;
+  transition: padding 240ms ease;
+}
+.accordion--open .accordion__inner {
+  padding-bottom: 24px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .accordion,
+  .accordion__chevron,
+  .accordion__body,
+  .accordion__inner {
+    transition-duration: 0.01ms;
+  }
+}
 .button {
   display: inline-flex;
   align-items: center;
