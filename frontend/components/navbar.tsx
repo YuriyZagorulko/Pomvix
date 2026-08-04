@@ -7,7 +7,6 @@ import { ArrowUpRight, Menu, X } from 'lucide-react';
 const navigationLinks = [
   ['Services', '/services'],
   ['Process', '/process'],
-  ['Case studies', '/case-studies'],
   ['FAQ', '/faq'],
   ['Technologies', '/technologies'],
   ['About', '/about'],

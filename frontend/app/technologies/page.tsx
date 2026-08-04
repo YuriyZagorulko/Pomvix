@@ -23,7 +23,7 @@ export default function Technologies() {
         description="We choose technologies for their clarity, maturity, and ability to serve your product for years—not because they’re trending."
       />
       <Section title="A stack designed to last.">
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 mt-7">
           {groups.map(([name, I, items]) => (
             <div className="card p-8" key={name as string}>
               {typeof I === 'function' && <I className="text-mint" size={25} />}
