@@ -23,9 +23,9 @@ async def create_contact(
     session: AsyncSession = Depends(get_session),
 ):
     try:
-        await ContactRepository().create(session, data)
+        submission = await ContactRepository().create(session, data)
         try:
-            send_contact_email(data.name, str(data.email), data.company, data.message)
+            send_contact_email(data, submitted_at=submission.created_at)
         except EmailDeliveryError:
             # Persistence succeeds independently; delivery can be retried/alerted later.
             logger.warning(

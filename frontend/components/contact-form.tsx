@@ -1,11 +1,26 @@
 'use client';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { ArrowRight, Check, LoaderCircle } from 'lucide-react';
 import { siteConfig } from '@/lib/site';
 export function ContactForm() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const [attribution, setAttribution] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const values: Record<string, string> = {
+      landing_page_url: window.location.href,
+      referrer: document.referrer,
+    };
+    for (const key of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']) {
+      const value = params.get(key);
+      if (value) values[key] = value;
+    }
+    setAttribution(values);
+  }, []);
+
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setState('loading');
@@ -15,7 +30,7 @@ export function ContactForm() {
       setState('idle');
       return;
     }
-    const body = Object.fromEntries(new FormData(form));
+    const body = { ...Object.fromEntries(new FormData(form)), ...attribution };
     try {
       const r = await fetch(`${siteConfig.apiUrl}/api/v1/contact`, {
         method: 'POST',
@@ -44,7 +59,7 @@ export function ContactForm() {
     <form onSubmit={submit} className="card space-y-5 p-7 md:p-9" aria-live="polite">
       <div className="grid gap-5 md:grid-cols-2">
         <label htmlFor="contact-name" className="text-sm text-slate-300">
-          Name
+          Full Name
           <input
             required
             id="contact-name"
@@ -57,7 +72,7 @@ export function ContactForm() {
           />
         </label>
         <label htmlFor="contact-email" className="text-sm text-slate-300">
-          Email
+          Work Email
           <input
             required
             type="email"
@@ -80,8 +95,36 @@ export function ContactForm() {
           placeholder="Company name"
         />
       </label>
+      <label htmlFor="contact-website" className="block text-sm text-slate-300">
+        Company Website <span className="text-slate-600">(optional)</span>
+        <input
+          id="contact-website"
+          name="website"
+          type="url"
+          inputMode="url"
+          autoComplete="url"
+          pattern="https?://.+"
+          title="Enter a complete website URL beginning with https://"
+          className="mt-2 w-full rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none focus:border-lavender"
+          placeholder="https://yourcompany.com"
+        />
+      </label>
+      <label htmlFor="contact-linkedin" className="block text-sm text-slate-300">
+        LinkedIn Profile <span className="text-slate-600">(optional)</span>
+        <input
+          id="contact-linkedin"
+          name="linkedin"
+          type="url"
+          inputMode="url"
+          autoComplete="url"
+          pattern="https?://.+"
+          title="Enter a complete LinkedIn profile URL beginning with https://"
+          className="mt-2 w-full rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none focus:border-lavender"
+          placeholder="https://www.linkedin.com/in/your-name"
+        />
+      </label>
       <label htmlFor="contact-message" className="block text-sm text-slate-300">
-        How can we help?
+        Project Description
         <textarea
           required
           id="contact-message"
