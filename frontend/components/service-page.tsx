@@ -54,6 +54,96 @@ export function ServicePage({ service }: { service: Service }) {
           </div>
         </div>
       </Section>
+      <Section eyebrow="Business challenges" title="Solve the constraint behind the request.">
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {(service.challenges ?? service.problems).map((item) => (
+            <div className="card p-7" key={item}>
+              <p className="leading-7 text-slate-400">{item}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <Section
+        eyebrow="Business value"
+        title="What a stronger software foundation makes possible."
+        className="border-y border-white/[.06] bg-white/[.015]"
+      >
+        <div className="mt-10 grid gap-4 md:grid-cols-2">
+          {(service.benefits ?? service.outcomes).map((item) => (
+            <div className="flex gap-3 card p-6" key={item}>
+              <Check className="mt-1 shrink-0 text-mint" size={17} />
+              <p className="leading-7 text-slate-400">{item}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <Section eyebrow="What we build" title="Typical project types and requested features.">
+        <div className="mt-10 grid gap-10 md:grid-cols-2">
+          <div>
+            <h3 className="text-2xl">Project types</h3>
+            <ul className="mt-5 space-y-3 text-slate-400">
+              {(service.projectTypes ?? []).map((item) => (
+                <li key={item}>— {item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-2xl">Frequently requested features</h3>
+            <ul className="mt-5 space-y-3 text-slate-400">
+              {(service.features ?? []).map((item) => (
+                <li key={item}>— {item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+      <Section
+        eyebrow="Industries"
+        title="Experience that adapts to your operating context."
+        className="border-y border-white/[.06] bg-white/[.015]"
+      >
+        <div className="mt-10 flex flex-wrap gap-3">
+          {(service.industries ?? []).map((item) => (
+            <span
+              className="rounded-full border border-white/10 bg-white/[.04] px-4 py-2 text-sm text-slate-300"
+              key={item}
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+        <p className="mt-8 max-w-3xl leading-8 text-slate-400">
+          The domain changes from one business to the next, but the delivery discipline stays
+          consistent: understand the workflow, make assumptions visible, protect sensitive data, and
+          build a product that can be improved after launch.
+        </p>
+      </Section>
+      <Section eyebrow="Engagement models" title="A delivery shape that matches your stage.">
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          {(service.engagementModels ?? []).map((model) => (
+            <div className="card p-7" key={model.name}>
+              <h3 className="text-xl">{model.name}</h3>
+              <p className="mt-3 leading-7 text-slate-400">{model.description}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 max-w-3xl leading-8 text-slate-400">
+          <strong className="font-medium text-white">Typical timeline:</strong> {service.timeline}
+        </p>
+      </Section>
+      <Section
+        eyebrow="A deeper view"
+        title="Software decisions made with the whole product in mind."
+        className="border-y border-white/[.06] bg-white/[.015]"
+      >
+        <div className="mt-10 max-w-3xl space-y-6 text-slate-400">
+          {(service.longDescription ?? []).map((paragraph) => (
+            <p className="leading-8" key={paragraph}>
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </Section>
       <Section
         eyebrow="How we work"
         title="A process designed to reduce uncertainty."
@@ -128,6 +218,11 @@ export function ServicePage({ service }: { service: Service }) {
         <Link href="/contact" className="button button-primary mt-10">
           Start a conversation <ArrowRight size={16} />
         </Link>
+        <div className="mt-8 flex flex-wrap gap-5 text-sm text-slate-400">
+          <Link href="/process">See the Pomvix process</Link>
+          <Link href="/faq">Read all FAQs</Link>
+          <Link href="/contact">Contact Pomvix</Link>
+        </div>
       </Section>
     </main>
   );

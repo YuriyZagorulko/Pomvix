@@ -73,3 +73,43 @@ export function serviceJsonLd(service: Service) {
     ],
   };
 }
+
+export function pageJsonLd(title: string, description: string, path: string, type = 'WebPage') {
+  const url = `${siteConfig.url}${path}`;
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': type,
+        '@id': `${url}#page`,
+        name: title,
+        description,
+        url,
+        isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: siteConfig.url },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+          { '@type': 'ListItem', position: 2, name: title, item: url },
+        ],
+      },
+    ],
+  };
+}
+
+export function faqJsonLd(
+  groups: { title: string; items: { question: string; answer: string }[] }[],
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: groups
+      .flatMap((group) => group.items)
+      .map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+  };
+}
