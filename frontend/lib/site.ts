@@ -13,4 +13,7 @@ export const siteConfig = {
   apiUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
   /** Public contact email address */
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@pomvix.com',
+  name: 'Pomvix',
+  description:
+    'Pomvix builds web applications, SaaS platforms, MVPs, and practical AI products for ambitious teams.',
 } as const;

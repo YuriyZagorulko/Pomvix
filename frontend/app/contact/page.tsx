@@ -3,11 +3,12 @@ import { Mail, MapPin } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { ContactForm } from '@/components/contact-form';
 import { siteConfig } from '@/lib/site';
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Start a conversation with the Pomvix team.',
-  alternates: { canonical: '/contact' },
-};
+import { pageMetadata } from '@/lib/seo';
+export const metadata: Metadata = pageMetadata(
+  'Contact Pomvix',
+  'Talk with Pomvix about your AI product, SaaS platform, MVP, web application, or backend project.',
+  '/contact',
+);
 export default function Contact() {
   return (
     <main>

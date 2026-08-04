@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
-export const metadata: Metadata = {
-  title: 'About',
-  description: 'Meet Pomvix, an independent software studio for ambitious teams.',
-  alternates: { canonical: '/about' },
-};
+import { pageMetadata } from '@/lib/seo';
+export const metadata: Metadata = pageMetadata(
+  'About Pomvix',
+  'Meet Pomvix, an independent software studio for ambitious teams building useful digital products.',
+  '/about',
+);
 export default function About() {
   return (
     <main>

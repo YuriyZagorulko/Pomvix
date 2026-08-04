@@ -2,11 +2,12 @@ import type { Metadata } from 'next';
 import { Code2, Database, Cloud, BrainCircuit } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
-export const metadata: Metadata = {
-  title: 'Technologies',
-  description: 'A modern, considered technology stack for reliable digital products.',
-  alternates: { canonical: '/technologies' },
-};
+import { pageMetadata } from '@/lib/seo';
+export const metadata: Metadata = pageMetadata(
+  'Technology Stack',
+  'Explore the modern technologies Pomvix uses to build reliable web, SaaS, AI, and backend products.',
+  '/technologies',
+);
 const groups = [
   ['Frontend', Code2, ['React', 'Next.js', 'TypeScript', 'Tailwind CSS']],
   ['Backend', Database, ['Python', 'FastAPI', 'PostgreSQL', 'SQLAlchemy']],

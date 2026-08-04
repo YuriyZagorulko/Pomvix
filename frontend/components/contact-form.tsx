@@ -23,7 +23,8 @@ export function ContactForm() {
         body: JSON.stringify(body),
       });
       const response = (await r.json().catch(() => ({}))) as { message?: string; detail?: string };
-      if (!r.ok) throw new Error(response.detail || response.message || 'Unable to send your message.');
+      if (!r.ok)
+        throw new Error(response.detail || response.message || 'Unable to send your message.');
       setSuccessMessage(response.message || 'Your message has been received.');
       setState('success');
     } catch (error) {
@@ -46,7 +47,11 @@ export function ContactForm() {
           Name
           <input
             required
-            id="contact-name" name="name" autoComplete="name" minLength={2} aria-invalid={state === 'error'}
+            id="contact-name"
+            name="name"
+            autoComplete="name"
+            minLength={2}
+            aria-invalid={state === 'error'}
             className="mt-2 w-full rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none transition focus:border-lavender"
             placeholder="Your name"
           />
@@ -56,7 +61,10 @@ export function ContactForm() {
           <input
             required
             type="email"
-            id="contact-email" name="email" autoComplete="email" aria-invalid={state === 'error'}
+            id="contact-email"
+            name="email"
+            autoComplete="email"
+            aria-invalid={state === 'error'}
             className="mt-2 w-full rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none transition focus:border-lavender"
             placeholder="you@company.com"
           />
@@ -65,7 +73,9 @@ export function ContactForm() {
       <label htmlFor="contact-company" className="block text-sm text-slate-300">
         Company <span className="text-slate-600">(optional)</span>
         <input
-          id="contact-company" name="company" autoComplete="organization"
+          id="contact-company"
+          name="company"
+          autoComplete="organization"
           className="mt-2 w-full rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none focus:border-lavender"
           placeholder="Company name"
         />
@@ -74,7 +84,10 @@ export function ContactForm() {
         How can we help?
         <textarea
           required
-          id="contact-message" name="message" minLength={10} aria-invalid={state === 'error'}
+          id="contact-message"
+          name="message"
+          minLength={10}
+          aria-invalid={state === 'error'}
           rows={5}
           className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none focus:border-lavender"
           placeholder="Tell us a little about your project..."
@@ -82,10 +95,16 @@ export function ContactForm() {
       </label>
       {state === 'error' && (
         <p role="alert" className="text-sm text-lavender">
-          {errorMessage || `Something went wrong. Please email us directly at ${siteConfig.contactEmail}.`}
+          {errorMessage ||
+            `Something went wrong. Please email us directly at ${siteConfig.contactEmail}.`}
         </p>
       )}
-      <button disabled={state === 'loading'} className="button button-primary">
+      <button
+        type="submit"
+        disabled={state === 'loading'}
+        className="button button-primary"
+        aria-label="Send contact message"
+      >
         {state === 'loading' ? (
           <LoaderCircle className="animate-spin" size={16} />
         ) : (

@@ -20,6 +20,8 @@ export function Footer() {
             <Link href="/technologies">Technologies</Link>
             <Link href="/about">About us</Link>
             <Link href="/contact">Contact</Link>
+            <Link href="/services/ai-development">AI development</Link>
+            <Link href="/services/saas-development">SaaS development</Link>
           </div>
         </div>
         <div>

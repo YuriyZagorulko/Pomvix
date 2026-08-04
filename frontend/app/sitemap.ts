@@ -1,7 +1,14 @@
 import type { MetadataRoute } from 'next';
 import { siteConfig } from '@/lib/site';
+import { services } from '@/lib/services';
 export default function sitemap(): MetadataRoute.Sitemap {
-  return ['/', '/services', '/technologies', '/about', '/contact'].map((path) => ({
-    url: `${siteConfig.url}${path}`,
-  }));
+  const paths = [
+    '/',
+    '/services',
+    '/technologies',
+    '/about',
+    '/contact',
+    ...services.map(({ slug }) => `/services/${slug}`),
+  ];
+  return paths.map((path) => ({ url: `${siteConfig.url}${path}`, lastModified: new Date() }));
 }

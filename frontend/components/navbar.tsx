@@ -30,7 +30,7 @@ export function Navbar() {
   return (
     <header className="fixed top-0 z-50 w-full border-b border-white/[.07] bg-ink/75 backdrop-blur-xl">
       <div className="shell flex h-[76px] items-center justify-between">
-        <Link href="/" className="flex items-center gap-3">
+        <Link href="/" aria-label="Pomvix home" className="flex items-center gap-3">
           <Image
             src="/logo.png"
             alt="Pomvix"
@@ -55,7 +55,11 @@ export function Navbar() {
               {label}
             </Link>
           ))}
-          <Link href="/contact" className="button button-primary justify-center">
+          <Link
+            href="/contact"
+            aria-label="Start a project with Pomvix"
+            className="button button-primary justify-center"
+          >
             Start a project <ArrowUpRight size={15} />
           </Link>
         </nav>
