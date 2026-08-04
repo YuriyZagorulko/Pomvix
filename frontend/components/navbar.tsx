@@ -36,8 +36,8 @@ export function Navbar() {
           <Image
             src="/logo.png"
             alt="Pomvix"
-            width={42}
-            height={32}
+            width={210}
+            height={160}
             className="h-9 w-auto object-contain"
             priority
           />
