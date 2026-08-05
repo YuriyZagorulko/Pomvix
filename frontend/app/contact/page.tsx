@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Mail, MapPin } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { ContactForm } from '@/components/contact-form';
 import { siteConfig } from '@/lib/site';
@@ -34,13 +34,6 @@ export default function Contact() {
             <a className="mt-2 block text-slate-400" href={`mailto:${siteConfig.contactEmail}`}>
               {siteConfig.contactEmail}
             </a>
-          </div>
-          <div>
-            <MapPin className="text-mint" size={21} />
-            <h3 className="mt-5">Based anywhere useful</h3>
-            <p className="mt-2 max-w-xs leading-7 text-slate-400">
-              Remote by design, connected by purpose.
-            </p>
           </div>
         </aside>
       </section>
