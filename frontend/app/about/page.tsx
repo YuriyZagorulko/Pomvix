@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
-import { pageMetadata } from '@/lib/seo';
+import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata: Metadata = pageMetadata(
   'About Pomvix',
   'Meet Pomvix, an independent software studio for ambitious teams building useful digital products.',
@@ -10,6 +10,14 @@ export const metadata: Metadata = pageMetadata(
 export default function About() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageJsonLd(String(metadata.title), String(metadata.description), '/about'),
+          ),
+        }}
+      />
       <PageHero
         eyebrow="A little about us"
         title="We believe technology is at its best when it feels inevitable."

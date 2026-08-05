@@ -8,6 +8,7 @@ export function pageMetadata(title: string, description: string, path: string): 
     title,
     description,
     alternates: { canonical: path },
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${title} — Pomvix`,
       description,
@@ -15,7 +16,14 @@ export function pageMetadata(title: string, description: string, path: string): 
       type: 'website',
       siteName: siteConfig.name,
       locale: 'en_US',
-      images: [{ url: `${siteConfig.url}/logo.png`, alt: 'Pomvix logo' }],
+      images: [
+        {
+          url: `${siteConfig.url}/logo.png`,
+          width: 1200,
+          height: 630,
+          alt: 'Pomvix software development studio',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
@@ -86,6 +94,7 @@ export function pageJsonLd(title: string, description: string, path: string, typ
         description,
         url,
         isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: siteConfig.url },
+        inLanguage: 'en-US',
       },
       {
         '@type': 'BreadcrumbList',

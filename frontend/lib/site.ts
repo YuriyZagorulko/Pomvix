@@ -8,7 +8,9 @@
 
 export const siteConfig = {
   /** Public site URL, e.g. https://pomvix.com */
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  // Keep production URLs canonical even if a build is run without env vars.
+  // Local development can still override this with NEXT_PUBLIC_SITE_URL.
+  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://pomvix.com',
   /** Public API base URL, e.g. https://pomvix.com/api/v1 */
   apiUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
   /** Public contact email address */

@@ -3,7 +3,7 @@ import { Mail, MapPin } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { ContactForm } from '@/components/contact-form';
 import { siteConfig } from '@/lib/site';
-import { pageMetadata } from '@/lib/seo';
+import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata: Metadata = pageMetadata(
   'Contact Pomvix',
   'Talk with Pomvix about your AI product, SaaS platform, MVP, web application, or backend project.',
@@ -12,6 +12,14 @@ export const metadata: Metadata = pageMetadata(
 export default function Contact() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageJsonLd(String(metadata.title), String(metadata.description), '/contact'),
+          ),
+        }}
+      />
       <PageHero
         eyebrow="Start a conversation"
         title="Have something in mind?"

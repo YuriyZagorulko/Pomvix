@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Hero } from '@/components/hero';
 import { Section } from '@/components/section';
 import { ServiceCards, WorkCards } from '@/components/cards';
-import { pageMetadata } from '@/lib/seo';
+import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata(
   'Custom Software Development Company',
   'Pomvix is a software development company building AI products, SaaS platforms, MVPs, and custom web applications for ambitious teams.',
@@ -12,6 +12,14 @@ export const metadata = pageMetadata(
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageJsonLd(String(metadata.title), String(metadata.description), '/'),
+          ),
+        }}
+      />
       <Hero />
       <Section eyebrow="What we do" title="The right mix of clarity, craft, and technical depth.">
         <ServiceCards />

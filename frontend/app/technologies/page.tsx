@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Code2, Database, Cloud, BrainCircuit } from 'lucide-react';
 import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
-import { pageMetadata } from '@/lib/seo';
+import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata: Metadata = pageMetadata(
   'Technology Stack',
   'Explore the modern technologies Pomvix uses to build reliable web, SaaS, AI, and backend products.',
@@ -46,6 +46,14 @@ const groups = [
 export default function Technologies() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            pageJsonLd(String(metadata.title), String(metadata.description), '/technologies'),
+          ),
+        }}
+      />
       <PageHero
         eyebrow="Technology with intent"
         title="A reliable foundation for ambitious products."
