@@ -23,7 +23,7 @@ export default function Home() {
       <Hero />
       <Section
         eyebrow="What Pomvix does"
-        title="One senior software partner for the next stage of your product."
+        title="Experienced engineering for the next stage of your product."
       >
         <ServiceCards />
       </Section>
@@ -59,7 +59,7 @@ export default function Home() {
       </Section>
       <Section
         eyebrow="Why Pomvix"
-        title="Senior engineering without the layers of a large agency."
+        title="Build reliable software with focused technical execution."
         className="border-y border-white/[.06] bg-white/[.015]"
       >
         <div className="mt-14 grid gap-10 md:grid-cols-3">
@@ -67,8 +67,8 @@ export default function Home() {
             <span className="text-5xl font-light text-lavender">01</span>
             <h3 className="mt-7 text-xl">Direct communication</h3>
             <p className="mt-3 text-sm leading-7 text-slate-400">
-              Work directly with the developer responsible for understanding and shipping your
-              product.
+              Work closely with experienced engineering throughout product planning, development,
+              and delivery.
             </p>
           </div>
           <div>

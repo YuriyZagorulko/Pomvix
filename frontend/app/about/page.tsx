@@ -4,7 +4,7 @@ import { Section } from '@/components/section';
 import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata: Metadata = pageMetadata(
   'About Pomvix',
-  'Meet Pomvix, an independent software studio for ambitious teams building useful digital products.',
+  'Pomvix is a software development partner helping ambitious teams build useful AI, SaaS, MVP, and web products.',
   '/about',
 );
 export default function About() {
@@ -21,7 +21,7 @@ export default function About() {
       <PageHero
         eyebrow="A little about us"
         title="We believe technology is at its best when it feels inevitable."
-        description="Pomvix is an independent software studio. We bring product thinking and engineering craft together to help good ideas become useful realities."
+        description="Pomvix brings product thinking and engineering craft together to help startups and growing companies turn good ideas into useful AI, SaaS, MVP, and web products."
       />
       <Section title="Our principles">
         <div className="mt-14 grid gap-5 md:grid-cols-3">
