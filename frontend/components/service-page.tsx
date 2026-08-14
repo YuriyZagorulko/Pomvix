@@ -18,7 +18,7 @@ export function ServicePage({ service }: { service: Service }) {
       <section className="shell pb-24">
         <div className="flex flex-wrap gap-4">
           <Link href="/contact" className="button button-primary">
-            Discuss your project <ArrowRight size={16} />
+            Get a technical assessment <ArrowRight size={16} />
           </Link>
           <Link href="/services" className="button button-ghost">
             View all services
@@ -214,7 +214,7 @@ export function ServicePage({ service }: { service: Service }) {
             ))}
         </div>
         <Link href="/contact" className="button button-primary mt-10">
-          Start a conversation <ArrowRight size={16} />
+          Discuss your project <ArrowRight size={16} />
         </Link>
         <div className="mt-8 flex flex-wrap gap-5 text-sm text-slate-400">
           <Link href="/process">See the Pomvix process</Link>

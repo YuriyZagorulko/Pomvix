@@ -10,11 +10,11 @@ const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
 export const metadata: Metadata = {
   title: {
-    default: 'Pomvix — Software that moves businesses forward',
+    default: 'Pomvix — AI & SaaS Product Development',
     template: '%s — Pomvix',
   },
   description:
-    'Pomvix builds thoughtful software, SaaS platforms, and AI products for ambitious teams.',
+    'Pomvix helps startups and growing companies build, extend, and automate AI-powered products, SaaS applications, MVPs, and modern web software.',
   metadataBase: new URL(siteConfig.url),
   alternates: { canonical: '/' },
   robots: {
@@ -38,8 +38,9 @@ export const metadata: Metadata = {
     apple: '/icon.webp',
   },
   openGraph: {
-    title: 'Pomvix — Software that moves businesses forward',
-    description: 'Digital products engineered for what comes next.',
+    title: 'Pomvix — AI & SaaS Product Development Partner',
+    description:
+      'AI-powered products, SaaS applications, MVPs, and senior software engineering for startups and growing companies.',
     type: 'website',
     siteName: 'Pomvix',
     locale: 'en_US',
@@ -50,8 +51,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Pomvix — Software that moves businesses forward',
-    description: 'Digital products engineered for what comes next.',
+    title: 'Pomvix — AI & SaaS Product Development Partner',
+    description:
+      'AI-powered products, SaaS applications, MVPs, and senior software engineering for startups and growing companies.',
     images: ['/logo.png'],
   },
 };

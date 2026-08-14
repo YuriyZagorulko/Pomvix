@@ -23,7 +23,7 @@ export default function Contact() {
       <PageHero
         eyebrow="Start a conversation"
         title="Have something in mind?"
-        description="Tell us what you’re building, what’s getting in the way, or simply where you want to go. We’ll get back to you within two business days."
+        description="Tell us what you’re building, what’s getting in the way, or where you want to go. A rough description is enough to start a useful conversation."
       />
       <section className="shell grid gap-12 pb-32 md:grid-cols-[1.1fr_.7fr]">
         <ContactForm />

@@ -124,7 +124,7 @@ export function ContactForm() {
         />
       </label>
       <label htmlFor="contact-message" className="block text-sm text-slate-300">
-        Project Description
+        What are you building?
         <textarea
           required
           id="contact-message"
@@ -133,7 +133,7 @@ export function ContactForm() {
           aria-invalid={state === 'error'}
           rows={5}
           className="mt-2 w-full resize-none rounded-xl border border-white/10 bg-white/[.04] p-3.5 text-white outline-none focus:border-lavender"
-          placeholder="Tell us a little about your project..."
+          placeholder="What are you building, who is it for, and where can we help?"
         />
       </label>
       {state === 'error' && (
@@ -156,6 +156,10 @@ export function ContactForm() {
           </>
         )}
       </button>
+      <p className="text-xs leading-6 text-slate-500">
+        Share only what is useful for an initial conversation. We’ll review it and follow up with a
+        sensible next step.
+      </p>
     </form>
   );
 }

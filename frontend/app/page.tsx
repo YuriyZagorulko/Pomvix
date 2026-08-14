@@ -2,11 +2,11 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Hero } from '@/components/hero';
 import { Section } from '@/components/section';
-import { ServiceCards, WorkCards } from '@/components/cards';
+import { ServiceCards } from '@/components/cards';
 import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata(
-  'Custom Software Development Company',
-  'Pomvix is a software development company building AI products, SaaS platforms, MVPs, and custom web applications for ambitious teams.',
+  'AI & SaaS Product Development Partner',
+  'Pomvix helps startups and growing companies build AI-powered products, SaaS applications, MVPs, and modern web software.',
   '/',
 );
 export default function Home() {
@@ -21,43 +21,73 @@ export default function Home() {
         }}
       />
       <Hero />
-      <Section eyebrow="What we do" title="The right mix of clarity, craft, and technical depth.">
+      <Section
+        eyebrow="What Pomvix does"
+        title="One senior software partner for the next stage of your product."
+      >
         <ServiceCards />
       </Section>
       <Section
-        eyebrow="A better way to build"
-        title="Built around your ambition, not a fixed process."
+        eyebrow="Three ways to work together"
+        title="From first release to the engineering capacity you need next."
+      >
+        <div className="mt-14 grid gap-5 md:grid-cols-3">
+          {[
+            [
+              'Build',
+              'MVP and SaaS product development',
+              'Turn a validated idea into a focused, usable product foundation.',
+            ],
+            [
+              'Extend',
+              'Senior engineering support',
+              'Add experienced React, Next.js, and Python capacity to an existing team.',
+            ],
+            [
+              'Automate',
+              'AI integrations and workflows',
+              'Connect models, agents, and business systems to remove repetitive work.',
+            ],
+          ].map(([label, title, description]) => (
+            <div className="card p-7" key={label}>
+              <span className="text-sm uppercase tracking-[.15em] text-mint">{label}</span>
+              <h3 className="mt-6 text-xl">{title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-400">{description}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+      <Section
+        eyebrow="Why Pomvix"
+        title="Senior engineering without the layers of a large agency."
         className="border-y border-white/[.06] bg-white/[.015]"
       >
         <div className="mt-14 grid gap-10 md:grid-cols-3">
           <div>
             <span className="text-5xl font-light text-lavender">01</span>
-            <h3 className="mt-7 text-xl">Start with why</h3>
+            <h3 className="mt-7 text-xl">Direct communication</h3>
             <p className="mt-3 text-sm leading-7 text-slate-400">
-              We ask better questions before we write a line of code.
+              Work directly with the developer responsible for understanding and shipping your
+              product.
             </p>
           </div>
           <div>
             <span className="text-5xl font-light text-lavender">02</span>
-            <h3 className="mt-7 text-xl">Make it tangible</h3>
+            <h3 className="mt-7 text-xl">Fast, focused execution</h3>
             <p className="mt-3 text-sm leading-7 text-slate-400">
-              Fast feedback loops turn uncertainty into momentum.
+              Keep scope clear, review working software early, and make practical trade-offs
+              quickly.
             </p>
           </div>
           <div>
             <span className="text-5xl font-light text-lavender">03</span>
-            <h3 className="mt-7 text-xl">Keep it moving</h3>
+            <h3 className="mt-7 text-xl">A foundation you can own</h3>
             <p className="mt-3 text-sm leading-7 text-slate-400">
-              We build foundations that stay useful long after launch.
+              Get understandable software, documented decisions, and an architecture ready for the
+              next step.
             </p>
           </div>
         </div>
-      </Section>
-      <Section
-        eyebrow="Selected work"
-        title="A small selection of things we've helped bring to life."
-      >
-        <WorkCards />
       </Section>
       <section className="shell pb-32">
         <div className="card relative overflow-hidden p-10 md:p-16">
