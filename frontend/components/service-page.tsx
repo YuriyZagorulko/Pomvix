@@ -173,7 +173,7 @@ export function ServicePage({ service }: { service: Service }) {
           ))}
         </div>
       </Section>
-      <Section eyebrow="Why Pomvix" title="Experienced engineering without unnecessary ceremony.">
+      <Section eyebrow="Why Pomvix" title="Experienced engineering for reliable, maintainable products.">
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {service.why.map((item) => (
             <div className="card p-7" key={item}>
