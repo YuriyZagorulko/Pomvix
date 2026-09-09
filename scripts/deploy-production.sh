@@ -66,7 +66,7 @@ for service in db backend frontend; do
   status="$("${COMPOSE[@]}" ps --status running --services | grep -Fx "$service" || true)"
   [[ "$status" == "$service" ]] || { echo "[FAIL] ${service} is not running" >&2; exit 1; }
 done
-curl --fail --silent --show-error http://127.0.0.1:8000/health >/dev/null
+"${COMPOSE[@]}" exec backend python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=5)" >/dev/null
 curl --fail --silent --show-error http://127.0.0.1:3000/ >/dev/null
 bash ./scripts/smoke-test-production.sh
 printf '\n[OK] production deployment completed and all services are healthy\n'
