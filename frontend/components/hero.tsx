@@ -11,7 +11,7 @@ export function Hero() {
         <div className="max-w-4xl reveal">
           <p className="eyebrow mb-7">AI & SaaS product development partner</p>
           <h1 className="text-5xl font-semibold leading-[1.04] md:text-8xl">
-            Build software that <span className="gradient-text">moves your product forward.</span>
+            Build software that <span className="gradient-text">moves your product forward test.</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-slate-400 md:text-xl">
             Pomvix helps startups and growing companies build, extend, and automate modern software
