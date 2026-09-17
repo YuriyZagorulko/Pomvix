@@ -16,6 +16,10 @@ export const siteConfig = {
   /** Public contact email address */
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@pomvix.com',
   name: 'Pomvix',
+  /**
+   * Canonical organization description, reused by the Organization and WebSite
+   * entities in app/layout.tsx so both nodes describe the same business.
+   */
   description:
-    'Pomvix builds web applications, SaaS platforms, MVPs, and practical AI products for ambitious teams.',
+    'Pomvix is an independent software development practice building AI-powered products, SaaS platforms, MVPs, and custom web and backend systems.',
 } as const;

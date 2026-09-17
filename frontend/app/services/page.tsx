@@ -26,9 +26,12 @@ export default function Services() {
             '@graph': [
               {
                 '@type': 'WebPage',
+                '@id': `${siteConfig.url}/services#page`,
                 name: 'Software Development Services',
                 url: `${siteConfig.url}/services`,
                 description: metadata.description,
+                // Reference the canonical WebSite entity so this page joins the same graph.
+                isPartOf: { '@id': `${siteConfig.url}#website` },
               },
               {
                 '@type': 'BreadcrumbList',

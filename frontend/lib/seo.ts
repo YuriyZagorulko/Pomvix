@@ -45,7 +45,9 @@ export function serviceJsonLd(service: Service) {
         name: service.title,
         serviceType: service.shortTitle,
         description: service.description,
-        provider: { '@type': 'ProfessionalService', name: siteConfig.name, url: siteConfig.url },
+        // Reference the single sitewide Organization entity declared in app/layout.tsx
+        // instead of re-declaring a provider node on every service page.
+        provider: { '@id': `${siteConfig.url}#organization` },
         url,
       },
       {
@@ -54,7 +56,8 @@ export function serviceJsonLd(service: Service) {
         name: service.title,
         description: service.description,
         url,
-        isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: siteConfig.url },
+        // Reference the canonical WebSite entity by @id so the graph has one WebSite node.
+        isPartOf: { '@id': `${siteConfig.url}#website` },
         about: { '@id': `${url}#service` },
       },
       {
@@ -93,7 +96,8 @@ export function pageJsonLd(title: string, description: string, path: string, typ
         name: title,
         description,
         url,
-        isPartOf: { '@type': 'WebSite', name: siteConfig.name, url: siteConfig.url },
+        // Reference the canonical WebSite entity by @id rather than embedding a second copy.
+        isPartOf: { '@id': `${siteConfig.url}#website` },
         inLanguage: 'en-US',
       },
       {

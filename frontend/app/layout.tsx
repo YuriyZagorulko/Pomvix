@@ -99,18 +99,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   name: 'Pomvix',
                   url: siteConfig.url,
                   logo: `${siteConfig.url}/logo.png`,
-                  email: `mailto:${siteConfig.contactEmail}`,
+                  // schema.org `email` expects a plain address, not a mailto: URI.
+                  email: siteConfig.contactEmail,
                   description: siteConfig.description,
                   knowsAbout: [
                     'Software development',
                     'AI product development',
                     'SaaS development',
+                    'MVP development',
                     'Web applications',
+                    'Backend development',
                   ],
+                  // The About page describes Pomvix as an independent practice run
+                  // by one developer; this is that operator.
+                  founder: {
+                    '@type': 'Person',
+                    '@id': `${siteConfig.url}#founder`,
+                    name: 'Yuriy Zagorulko',
+                    sameAs: ['https://github.com/YuriyZagorulko'],
+                  },
                   contactPoint: {
                     '@type': 'ContactPoint',
                     contactType: 'sales',
-                    email: `mailto:${siteConfig.contactEmail}`,
+                    email: siteConfig.contactEmail,
                   },
                 },
                 {
