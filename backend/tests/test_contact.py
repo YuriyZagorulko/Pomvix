@@ -42,12 +42,12 @@ class ContactEmailTests(unittest.TestCase):
 
 class ReadinessTests(unittest.TestCase):
     def test_migration_is_the_schema_source(self):
-        with open("backend/app/main.py", encoding="utf-8") as source:
+        with open("app/main.py", encoding="utf-8") as source:
             self.assertNotIn("create_" + "all", source.read())
-        with open("backend/alembic/versions/001_create_contact_submissions.py", encoding="utf-8") as migration:
+        with open("alembic/versions/20260803_0001_initial.py", encoding="utf-8") as migration:
             content = migration.read()
-        self.assertIn('revision = "001_create_contact_submissions"', content)
-        self.assertIn('op.create_table(', content)
+        self.assertIn('revision = "20260803_0001"', content)
+        self.assertIn('CREATE TABLE IF NOT EXISTS contact_submissions', content)
 
     def test_invalid_production_configuration_fails_fast(self):
         from app.core.config import Settings
