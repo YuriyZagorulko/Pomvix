@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
-import { siteConfig } from '@/lib/site';
+import { getSiteUrl, siteConfig } from '@/lib/site';
 import type { Service } from '@/lib/services';
 
 export function pageMetadata(title: string, description: string, path: string): Metadata {
-  const url = `${siteConfig.url}${path}`;
+  const url = getSiteUrl(path);
   return {
     title,
     description,
-    alternates: { canonical: path },
+    alternates: { canonical: url },
     robots: { index: true, follow: true },
     openGraph: {
       title: `${title} — Pomvix`,
@@ -18,7 +18,7 @@ export function pageMetadata(title: string, description: string, path: string): 
       locale: 'en_US',
       images: [
         {
-          url: `${siteConfig.url}/logo.png`,
+          url: getSiteUrl('/logo.png'),
           width: 1200,
           height: 630,
           alt: 'Pomvix software development studio',
@@ -29,13 +29,13 @@ export function pageMetadata(title: string, description: string, path: string): 
       card: 'summary_large_image',
       title: `${title} — Pomvix`,
       description,
-      images: [`${siteConfig.url}/logo.png`],
+      images: [getSiteUrl('/logo.png')],
     },
   };
 }
 
 export function serviceJsonLd(service: Service) {
-  const url = `${siteConfig.url}/services/${service.slug}`;
+  const url = getSiteUrl(`/services/${service.slug}`);
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -86,7 +86,7 @@ export function serviceJsonLd(service: Service) {
 }
 
 export function pageJsonLd(title: string, description: string, path: string, type = 'WebPage') {
-  const url = `${siteConfig.url}${path}`;
+  const url = getSiteUrl(path);
   return {
     '@context': 'https://schema.org',
     '@graph': [

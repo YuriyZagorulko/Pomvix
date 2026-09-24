@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/site';
+import { getSiteUrl } from '@/lib/site';
 
 /**
  * Serves /robots.txt.
@@ -55,7 +55,7 @@ Allow: /
 Disallow: /api/
 Disallow: /health
 
-Sitemap: ${siteConfig.url}/sitemap.xml
+Sitemap: ${getSiteUrl('/sitemap.xml')}
 `;
 
   return new Response(body, {

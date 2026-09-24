@@ -1,7 +1,11 @@
 import type { MetadataRoute } from 'next';
-import { siteConfig } from '@/lib/site';
+import { getSiteUrl } from '@/lib/site';
 import { services } from '@/lib/services';
+
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date().toISOString();
   const paths = [
     '/',
     '/services',
@@ -12,9 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact',
     ...services.map(({ slug }) => `/services/${slug}`),
   ];
+
   return paths.map((path) => ({
-    url: `${siteConfig.url}${path}`,
-    changeFrequency: path === '/' ? 'weekly' : 'monthly',
-    priority: path === '/' ? 1 : path.startsWith('/services/') ? 0.8 : 0.6,
+    url: getSiteUrl(path),
+    lastModified,
   }));
 }

@@ -5,7 +5,8 @@ import type { ReactNode } from 'react';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
-import { siteConfig } from '@/lib/site';
+import { getSiteUrl, siteConfig } from '@/lib/site';
+
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
   description:
     'Pomvix helps startups and growing companies build, extend, and automate AI-powered products, SaaS applications, MVPs, and modern web software.',
   metadataBase: new URL(siteConfig.url),
-  alternates: { canonical: '/' },
+  alternates: { canonical: getSiteUrl('/') },
   robots: {
     index: true,
     follow: true,
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Pomvix',
     locale: 'en_US',
-    url: '/',
+    url: getSiteUrl('/'),
     images: [
       { url: '/logo.png', width: 1200, height: 630, alt: 'Pomvix software development studio' },
     ],

@@ -6,11 +6,14 @@
  * frontend image (see docker-compose.prod.yml).
  */
 
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://pomvix.com';
+const siteUrl = new URL(configuredSiteUrl);
+
 export const siteConfig = {
-  /** Public site URL, e.g. https://pomvix.com */
+  /** Public site origin, e.g. https://pomvix.com */
   // Keep production URLs canonical even if a build is run without env vars.
   // Local development can still override this with NEXT_PUBLIC_SITE_URL.
-  url: process.env.NEXT_PUBLIC_SITE_URL || 'https://pomvix.com',
+  url: siteUrl.origin,
   /** Public API base URL, e.g. https://pomvix.com/api/v1 */
   apiUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
   /** Public contact email address */
@@ -23,3 +26,12 @@ export const siteConfig = {
   description:
     'Pomvix is an independent software development practice building AI-powered products, SaaS platforms, MVPs, and custom web and backend systems.',
 } as const;
+
+/** Build an absolute URL using the configured public site origin. */
+export function getSiteUrl(path = '/'): string {
+  const url = new URL(path, siteConfig.url);
+
+  // Next.js intentionally renders a root canonical as the origin without a
+  // trailing slash when trailingSlash is disabled. Keep generated URLs aligned.
+  return url.pathname === '/' ? url.origin : url.toString();
+}
