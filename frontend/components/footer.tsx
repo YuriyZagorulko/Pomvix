@@ -25,7 +25,7 @@ export function Footer() {
       <div className="shell grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="mb-4 flex items-center gap-3">
-            <Image src="/logo.png" alt="Pomvix" width={38} height={30} className="h-8 w-auto" />
+            <Image src="/logo.png" alt="Pomvix" width={124} height={90} className="h-8 w-auto" />
           </div>
           <p className="max-w-xs text-sm leading-7 text-slate-400">
             We build AI products, SaaS platforms, and custom software for ambitious businesses.
