@@ -1,0 +1,13 @@
+# Local development image — used only via docker-compose.override.yml (not production).
+FROM node:20-alpine
+WORKDIR /app
+
+ENV NEXT_TELEMETRY_DISABLED=1 \
+    NODE_ENV=development
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+EXPOSE 3000
+
+CMD ["npm", "run", "dev", "--", "-H", "0.0.0.0", "-p", "3000"]

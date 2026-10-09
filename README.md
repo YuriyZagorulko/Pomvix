@@ -55,20 +55,60 @@ All configuration is environment-driven. No hosts, credentials, or environment-s
 
 ## Local development
 
+### First-time Docker setup
+
 ```bash
 cp .env.example .env
+cp docker-compose.override.example.yml docker-compose.override.yml
 docker compose up --build
 ```
 
-Visit `http://localhost:3000`. The API health check is available at `http://localhost:8000/health`, and Swagger at `/docs`.
+The override file is gitignored. It is required for **live reload** in Docker (Next.js HMR and
+Uvicorn `--reload`). Without it, Compose uses the production-style images from the base
+`docker-compose.yml` (`next start` and multi-worker Uvicorn).
 
-**Port conflicts:** If something else already uses `3000` or `8000` on your machine, copy
-`docker-compose.override.example.yml` to `docker-compose.override.yml` (gitignored). Compose
-merges it automatically on `docker compose up --build`. The template publishes the frontend on
-host **13471** and the API on **18471** while containers still listen on **3000** and **8000**
-internally. PostgreSQL is not published to the host in the default compose files.
+### URLs and ports
 
-Without Docker:
+With the default override template:
+
+| Service | URL |
+| --- | --- |
+| Frontend | `http://localhost:13471` |
+| API health | `http://localhost:18471/health` |
+| Swagger | `http://localhost:18471/docs` |
+
+Containers still listen on **3000** (frontend) and **8000** (backend) internally. PostgreSQL is
+not published to the host.
+
+If ports **3000** / **8000** are free and you prefer them, adjust or omit the `ports: !override`
+sections in your local `docker-compose.override.yml` and set matching `NEXT_PUBLIC_*` /
+`FRONTEND_URL` values in `.env`.
+
+### Live reload in Docker
+
+When `docker-compose.override.yml` is present:
+
+| Change | Expected behavior |
+| --- | --- |
+| Frontend source (components, routes, styles, Tailwind) | Next.js dev server hot refresh — save and check the browser |
+| Backend Python under `backend/app/` | Uvicorn reload — save and retry the API |
+| `.env` / Compose environment variables | Restart or recreate the affected service |
+| `package.json`, lockfiles, `requirements.txt`, Dockerfiles | Rebuild the affected service: `docker compose up --build frontend` or `backend` |
+
+**Bind mounts:** host `./frontend` → container `/app`, host `./backend/app` (and Alembic files) →
+container `/app`. **Named volume** `pomvix_frontend_node_modules` keeps container-installed npm
+packages so the frontend mount does not hide `node_modules`.
+
+**File watching:** polling is enabled in the override (`WATCHPACK_POLLING`, `CHOKIDAR_USEPOLLING`)
+so HMR works reliably with bind mounts on Linux and Docker Desktop.
+
+**Development commands inside containers:**
+
+- Frontend: `npm run dev -- -H 0.0.0.0 -p 3000` (via `frontend/Dockerfile.dev`)
+- Backend: `uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/app`
+  (via `backend/Dockerfile.dev`, with Alembic still run by `entrypoint.sh` on start)
+
+### Without Docker
 
 ```bash
 cd frontend && npm install && npm run dev

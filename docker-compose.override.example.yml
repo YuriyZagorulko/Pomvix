@@ -1,28 +1,57 @@
-# Local port override template — NOT loaded automatically.
+# Local development override — NOT loaded automatically.
 #
-# Copy to docker-compose.override.yml (gitignored) so `docker compose up --build`
-# avoids conflicts when host ports 3000 / 8000 are already in use (e.g. another project):
+# Copy to docker-compose.override.yml (gitignored) for local Docker development:
 #
 #   cp docker-compose.override.example.yml docker-compose.override.yml
 #
-# Compose merges override.yml automatically. Internal container ports stay 3000 / 8000 / 5432.
+# Compose merges override.yml on `docker compose up`. This template:
+#   - Maps host ports 13471 → frontend:3000 and 18471 → backend:8000
+#   - Runs Next.js dev (HMR) and Uvicorn --reload with bind-mounted source
+#   - Keeps node_modules in a named volume so the host mount does not hide deps
+#
 # Production uses docker-compose.prod.yml only — this file is never deployed.
 
 services:
   backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
     ports: !override
       - '18471:8000'
+    volumes:
+      - ./backend/app:/app/app
+      - ./backend/alembic:/app/alembic
+      - ./backend/alembic.ini:/app/alembic.ini
+      - ./backend/entrypoint.sh:/app/entrypoint.sh
     environment:
       FRONTEND_URL: http://localhost:13471
+    command:
+      - uvicorn
+      - app.main:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - '8000'
+      - --reload
+      - --reload-dir
+      - /app/app
 
   frontend:
-    ports: !override
-      - '13471:3000'
     build:
       context: ./frontend
-      args:
-        NEXT_PUBLIC_SITE_URL: http://localhost:13471
-        NEXT_PUBLIC_API_URL: http://localhost:18471
-        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-hello@pomvix.com}
+      dockerfile: Dockerfile.dev
+    ports: !override
+      - '13471:3000'
+    volumes:
+      - ./frontend:/app
+      - pomvix_frontend_node_modules:/app/node_modules
     environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_SITE_URL: http://localhost:13471
       NEXT_PUBLIC_API_URL: http://localhost:18471
+      NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-hello@pomvix.com}
+      WATCHPACK_POLLING: 'true'
+      CHOKIDAR_USEPOLLING: 'true'
+
+volumes:
+  pomvix_frontend_node_modules:

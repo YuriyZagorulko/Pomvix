@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
+const devApiConnectSrc =
+  process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_API_URL
+    ? ` ${new URL(process.env.NEXT_PUBLIC_API_URL).origin}`
+    : '';
+
 const nextConfig = {
   output: 'standalone',
   images: { formats: ['image/avif', 'image/webp'] },
@@ -20,7 +25,9 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://fonts.googleapis.com; " +
               "img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://fonts.gstatic.com; " +
               "font-src 'self' https://fonts.gstatic.com; " +
-              "connect-src 'self' https://api.pomvix.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://www.google.com https://static.cloudflareinsights.com; " +
+              "connect-src 'self' https://api.pomvix.com https://www.googletagmanager.com https://www.google-analytics.com https://analytics.google.com https://www.google.com https://static.cloudflareinsights.com" +
+              devApiConnectSrc +
+              '; ' +
               "frame-src 'self' https://www.googletagmanager.com; " +
               "object-src 'none'; " +
               "base-uri 'self'; " +
