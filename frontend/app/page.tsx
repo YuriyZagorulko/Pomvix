@@ -58,10 +58,10 @@ export default function Home() {
           ))}
         </div>
       </Section>
-      <Section eyebrow="Case study" title="Founder-owned e-commerce platform engineering.">
+      <Section eyebrow="Case study" title="E-commerce platform engineering.">
         <p className="mt-8 max-w-2xl leading-8 text-slate-400">
-          A transparent look at Gadgeto—supplier imports, catalog normalization, and multi-channel
-          exports on FastAPI, PostgreSQL, and Celery—not a client testimonial.
+          Gadgeto demonstrates supplier imports, catalog normalization, and multi-channel exports on
+          FastAPI, PostgreSQL, and Celery.
         </p>
         <CaseStudyCards />
       </Section>

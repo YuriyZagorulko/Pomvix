@@ -9,12 +9,13 @@ import { gadgetoCaseStudyImageSpecs } from '@/lib/gadgeto-case-study-images';
 import { caseStudyJsonLd, pageMetadata } from '@/lib/seo';
 
 const study = caseStudyBySlug.gadgeto;
+const pageTitle = `${study.title} — ${study.subtitle}`;
 
 const metaDescription =
-  'How Pomvix engineered Gadgeto: a founder-owned electronics e-commerce platform with FastAPI, PostgreSQL, Celery supplier imports, catalog normalization, and Rozetka, Prom.ua, and Google Merchant exports.';
+  'Gadgeto is an e-commerce platform for electronics and computer equipment. Pomvix engineered catalog processing, supplier data normalization, and sales-channel integrations with FastAPI, PostgreSQL, Celery, and Rozetka, Prom.ua, and Google Merchant exports.';
 
 export const metadata: Metadata = pageMetadata(
-  study.subtitle,
+  pageTitle,
   metaDescription,
   '/case-studies/gadgeto',
 );
@@ -39,7 +40,7 @@ export default function GadgetoCaseStudyPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(
-            caseStudyJsonLd(study.subtitle, metaDescription, study.slug, study.publicSiteUrl),
+            caseStudyJsonLd(pageTitle, metaDescription, study.slug, study.publicSiteUrl),
           ),
         }}
       />
@@ -68,14 +69,12 @@ export default function GadgetoCaseStudyPage() {
             <span className="rounded-full border border-mint/35 bg-mint/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-mint">
               {study.badge}
             </span>
-            <span className="text-sm text-slate-500">Not a client engagement</span>
           </div>
-          <h1 className="text-4xl font-semibold md:text-6xl">{study.subtitle}</h1>
+          <h1 className="text-4xl font-semibold md:text-6xl">{pageTitle}</h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-400">
-            Gadgeto is an electronics and computer-equipment retailer in Ukraine. Pomvix is building
-            the custom catalog, backend, and integration layer that supports multi-supplier
-            inventory and sales-channel exports—while the public storefront runs on the same modern
-            stack.
+            Gadgeto is an e-commerce platform for electronics and computer equipment. The platform
+            involves complex product catalog processing, supplier data normalization, and
+            sales-channel integrations—with the public storefront running on the same modern stack.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {study.technologies.map((tech) => (
@@ -117,16 +116,18 @@ export default function GadgetoCaseStudyPage() {
         <div className="mt-10 grid gap-10 md:grid-cols-[1.15fr_.85fr]">
           <div className="space-y-5 leading-8 text-slate-400">
             <p>
-              Gadgeto sells technical products where specifications, compatibility, and stock change
-              frequently. A generic theme can list products; it does not reliably absorb two
+              The catalog covers technical products where specifications, compatibility, and stock
+              change frequently. A generic theme can list products; it does not reliably absorb two
               wholesale suppliers with different category trees, attribute names, and incomplete
               rows.
             </p>
             <p>
-              The engineering focus is an internal catalog model—categories, attributes, values,
-              pricing, and stock—fed by repeatable imports and mapped to outbound feeds for
-              marketplaces and Google Merchant. Business logic lives in a FastAPI backend; long
-              imports and exports run in Celery workers backed by Redis, not in HTTP request cycles.
+              The engineering approach separates internal catalog data from supplier-specific and
+              channel-specific mappings. Categories, attributes, values, pricing, and stock are
+              normalized in an internal model, fed by repeatable imports, and mapped to outbound
+              feeds for marketplaces and Google Merchant. Business logic lives in a FastAPI backend;
+              long imports and exports run in Celery workers backed by Redis, not in HTTP request
+              cycles.
             </p>
             <p>
               The legacy production stack was WordPress and WooCommerce (documented in the
@@ -148,8 +149,10 @@ export default function GadgetoCaseStudyPage() {
             <h3 className="text-lg font-medium text-white">At a glance</h3>
             <dl className="mt-6 space-y-4 text-sm">
               <div>
-                <dt className="text-slate-500">Ownership</dt>
-                <dd className="mt-1 text-slate-300">Founder-owned product (Pomvix operator)</dd>
+                <dt className="text-slate-500">Engineering focus</dt>
+                <dd className="mt-1 text-slate-300">
+                  Catalog processing, supplier normalization, channel integrations
+                </dd>
               </div>
               <div>
                 <dt className="text-slate-500">Domain</dt>
@@ -353,8 +356,8 @@ export default function GadgetoCaseStudyPage() {
             <h3 className="text-lg font-medium">1 · Live today</h3>
             <p className="mt-3 text-sm leading-7 text-slate-400">
               The customer-facing website at gadgeto.com.ua is served by the Next.js storefront
-              (HTTP responses identify Next.js as of October 2026). It is the public face of the
-              founder-owned business—not a separate demo site.
+              (HTTP responses identify Next.js as of October 2026). It is the live public
+              storefront—not a separate demo site.
             </p>
           </div>
           <div className="card p-7">

@@ -15,9 +15,9 @@ export const caseStudies: CaseStudyMeta[] = [
     slug: 'gadgeto',
     title: 'Gadgeto',
     subtitle: 'E-commerce Platform Engineering & Catalog Automation',
-    badge: 'Founder-owned project',
+    badge: 'E-commerce platform',
     excerpt:
-      'A custom electronics e-commerce platform with supplier imports, normalized catalog data, pricing, and multi-channel exports—built as an independent product, not a client engagement.',
+      'Gadgeto is an e-commerce platform for electronics and computer equipment, covering supplier imports, catalog normalization, and multi-channel exports.',
     publicSiteUrl: 'https://gadgeto.com.ua/',
     relatedServiceSlugs: ['web-development', 'backend-development', 'saas-development'],
     technologies: [
