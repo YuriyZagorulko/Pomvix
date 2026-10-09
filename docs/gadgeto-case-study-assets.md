@@ -15,7 +15,7 @@ This document lists visuals for the Pomvix case study at `/case-studies/gadgeto`
 | Source | Reason |
 | --- | --- |
 | `Gadgeto-new/frontend/public/images/categories/*` | Marketing category tiles, not UI screenshots — would misrepresent the case study as a live page capture. |
-| `~/Documents/Images/gadgeto/*` | Camera RAW/JPG product photography, not storefront or admin UI. |
+| `~/Documents/Images/gadgeto/*` | Camera RAW/JPG product photography, not front-end or admin UI. |
 | Pomvix `public/` (other than brand) | No Gadgeto screenshots checked in today. |
 
 ---
@@ -38,7 +38,7 @@ Export as **WebP** (preferred) or **PNG**. Target **2×** the display width for 
 | **What to capture** | Public homepage of [https://gadgeto.com.ua/](https://gadgeto.com.ua/) (Ukrainian locale is fine). |
 | **How to capture** | Desktop browser ~1280–1440px wide. Load homepage logged out. Capture from top of page through hero + start of main content (first screen or ~900px tall viewport crop). Use a typical day — no debug banners. |
 | **Dimensions / ratio** | **1600 × 1000 px** (16∶10) or same ratio after crop. |
-| **Appears on case study** | Below the hero block — proves the **live Next.js storefront** referenced in overview and status. |
+| **Appears on case study** | Below the hero block — proves the **live Next.js front-end** referenced in overview and status. |
 | **Preparation** | WebP quality ~80–85; blur any personal account UI if visible; no fake edits. |
 
 ---
@@ -81,7 +81,7 @@ Export as **WebP** (preferred) or **PNG**. Target **2×** the display width for 
 | **How to capture** | Desktop, full width of product content column; include spec table if present. |
 | **Dimensions / ratio** | **1600 × 1000 px** (16∶10). |
 | **Appears on case study** | **Scope & capabilities** section — only rendered if this file exists (page works without it). |
-| **Preparation** | Same as public storefront rules; no misleading price/stock if staging. |
+| **Preparation** | Same as public front-end rules; no misleading price/stock if staging. |
 
 ---
 

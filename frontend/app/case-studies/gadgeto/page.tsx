@@ -74,7 +74,7 @@ export default function GadgetoCaseStudyPage() {
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-400">
             Gadgeto is an e-commerce platform for electronics and computer equipment. The platform
             involves complex product catalog processing, supplier data normalization, and
-            sales-channel integrations—with the public storefront running on the same modern stack.
+            sales-channel integrations—with the public front-end running on the same modern stack.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {study.technologies.map((tech) => (
@@ -111,7 +111,7 @@ export default function GadgetoCaseStudyPage() {
 
       <Section
         eyebrow="Project overview"
-        title="More than a storefront—a catalog operating system."
+        title="More than a front-end—a catalog operating system."
       >
         <div className="mt-10 grid gap-10 md:grid-cols-[1.15fr_.85fr]">
           <div className="space-y-5 leading-8 text-slate-400">
@@ -186,7 +186,7 @@ export default function GadgetoCaseStudyPage() {
           {[
             'Wholesale feeds use different category paths, attribute names, and value formats for the same concept.',
             'Rows arrive incomplete or inconsistent; guessing semantics would corrupt filters and channel listings.',
-            'Price and stock must stay aligned with supplier updates without blocking the storefront.',
+            'Price and stock must stay aligned with supplier updates without blocking the front-end.',
             'Each marketplace expects its own export shape—API listings, YML, or Merchant Center RSS.',
           ].map((item) => (
             <div className="card p-7" key={item}>
@@ -225,10 +225,10 @@ export default function GadgetoCaseStudyPage() {
             </strong>{' '}
             A scheduled catalog sync can run supplier imports first, then channel exports when
             imports succeed—Rozetka via seller API, Prom.ua via generated YML, Google Merchant via
-            RSS—so listing logic does not sprawl across the storefront.
+            RSS—so listing logic does not sprawl across the front-end.
           </p>
           <p>
-            <strong className="font-medium text-white">Storefront stays thin.</strong> The Next.js
+            <strong className="font-medium text-white">front-end stays thin.</strong> The Next.js
             public app and admin UI consume APIs; pricing rules and feed generation remain on the
             backend where they can be tested and audited.
           </p>
@@ -252,7 +252,7 @@ export default function GadgetoCaseStudyPage() {
           {[
             {
               title: 'Frontend & admin',
-              body: 'Next.js App Router, React, TypeScript, Tailwind, and shadcn/ui for the public storefront and staff admin (separate Next.js apps in Docker).',
+              body: 'Next.js App Router, React, TypeScript, Tailwind, and shadcn/ui for the public front-end and staff admin (separate Next.js apps in Docker).',
             },
             {
               title: 'Backend',
@@ -328,7 +328,7 @@ export default function GadgetoCaseStudyPage() {
             <ul className="mt-5 space-y-3 text-slate-400">
               {[
                 'Broader import validation and mapping coverage',
-                'Expanded storefront and search completeness',
+                'Expanded front-end and search completeness',
                 'Additional automated test coverage and production hardening',
               ].map((item) => (
                 <li className="flex gap-3" key={item}>
@@ -347,7 +347,7 @@ export default function GadgetoCaseStudyPage() {
 
       <Section eyebrow="Results & status" title="Engineering outcomes without invented metrics.">
         <div className="mt-10 flex flex-wrap gap-3">
-          <StatusPill label="Public storefront live (Next.js)" tone="live" />
+          <StatusPill label="Public front-end live (Next.js)" tone="live" />
           <StatusPill label="Backend, workers & admin implemented" tone="built" />
           <StatusPill label="Catalog parity & ops hardening in progress" tone="progress" />
         </div>
@@ -355,9 +355,9 @@ export default function GadgetoCaseStudyPage() {
           <div className="card p-7">
             <h3 className="text-lg font-medium">1 · Live today</h3>
             <p className="mt-3 text-sm leading-7 text-slate-400">
-              The customer-facing website at gadgeto.com.ua is served by the Next.js storefront
+              The customer-facing website at gadgeto.com.ua is served by the Next.js front-end
               (HTTP responses identify Next.js as of October 2026). It is the live public
-              storefront—not a separate demo site.
+              front-end—not a separate demo site.
             </p>
           </div>
           <div className="card p-7">

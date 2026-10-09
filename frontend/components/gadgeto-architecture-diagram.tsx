@@ -89,7 +89,7 @@ export function GadgetoArchitectureDiagram() {
           stroke="rgba(159,177,227,0.2)"
         />
         <text x={480} y={252} textAnchor="middle" fill="#a6b0cb" fontSize="11">
-          Next.js storefront (public)
+          Next.js front-end (public)
         </text>
         <text x={480} y={270} textAnchor="middle" fill="#8294e8" fontSize="10">
           reads catalog via FastAPI

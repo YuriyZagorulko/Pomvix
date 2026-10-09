@@ -40,7 +40,7 @@ export function CaseStudyFigure({
           alt={spec.alt}
           width={spec.width}
           height={spec.height}
-          className="h-full w-full object-cover object-top"
+          className="h-full w-full object-contain object-top"
           sizes="(max-width: 768px) 100vw, (max-width: 1180px) 90vw, 1120px"
           priority={priority}
         />

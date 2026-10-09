@@ -24,8 +24,8 @@ export const gadgetoCaseStudyImageSpecs: Record<
   homepage: {
     slot: 'homepage',
     filename: 'gadgeto-homepage.webp',
-    alt: 'Gadgeto public storefront homepage showing the electronics e-commerce header and main content',
-    caption: 'Live public storefront at gadgeto.com.ua (Next.js).',
+    alt: 'Gadgeto public front-end homepage showing the electronics e-commerce header and main content',
+    caption: 'Live public front-end at gadgeto.com.ua (Next.js).',
     width: 1600,
     height: 1000,
     aspectRatio: '16/10',
