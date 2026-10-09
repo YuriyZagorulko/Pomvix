@@ -111,6 +111,52 @@ export function pageJsonLd(title: string, description: string, path: string, typ
   };
 }
 
+export function caseStudyJsonLd(
+  title: string,
+  description: string,
+  slug: string,
+  publicSiteUrl?: string,
+) {
+  const url = getSiteUrl(`/case-studies/${slug}`);
+  const graph: Record<string, unknown>[] = [
+    {
+      '@type': 'Article',
+      '@id': `${url}#article`,
+      headline: title,
+      description,
+      url,
+      isPartOf: { '@id': `${siteConfig.url}#website` },
+      inLanguage: 'en-US',
+      author: { '@id': `${siteConfig.url}#organization` },
+      publisher: { '@id': `${siteConfig.url}#organization` },
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: siteConfig.url },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Case studies',
+          item: getSiteUrl('/case-studies'),
+        },
+        { '@type': 'ListItem', position: 3, name: title, item: url },
+      ],
+    },
+  ];
+
+  if (publicSiteUrl) {
+    graph.push({
+      '@type': 'WebSite',
+      '@id': `${publicSiteUrl}#website`,
+      name: title.split('—')[0]?.trim() ?? title,
+      url: publicSiteUrl,
+    });
+  }
+
+  return { '@context': 'https://schema.org', '@graph': graph };
+}
+
 export function faqJsonLd(
   groups: { title: string; items: { question: string; answer: string }[] }[],
 ) {

@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import { Hero } from '@/components/hero';
 import { Section } from '@/components/section';
 import { ServiceCards } from '@/components/cards';
+import { CaseStudyCards } from '@/components/case-study-cards';
 import { pageJsonLd, pageMetadata } from '@/lib/seo';
 export const metadata = pageMetadata(
   'AI & SaaS Product Development Partner',
@@ -56,6 +57,13 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </Section>
+      <Section eyebrow="Case study" title="Founder-owned e-commerce platform engineering.">
+        <p className="mt-8 max-w-2xl leading-8 text-slate-400">
+          A transparent look at Gadgeto—supplier imports, catalog normalization, and multi-channel
+          exports on FastAPI, PostgreSQL, and Celery—not a client testimonial.
+        </p>
+        <CaseStudyCards />
       </Section>
       <Section
         eyebrow="Why Pomvix"

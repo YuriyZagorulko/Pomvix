@@ -15,6 +15,7 @@ const companyLinks = [
   { label: 'Process', href: '/process' },
   { label: 'FAQ', href: '/faq' },
   { label: 'Technologies', href: '/technologies' },
+  { label: 'Case studies', href: '/case-studies' },
   { label: 'Contact', href: '/contact' },
 ];
 

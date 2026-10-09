@@ -4,10 +4,14 @@ import { PageHero } from '@/components/page-hero';
 import { Section } from '@/components/section';
 import { Accordion } from '@/components/accordion';
 import { serviceJsonLd } from '@/lib/seo';
+import { caseStudies } from '@/lib/case-studies';
 import { services, type Service } from '@/lib/services';
 
 export function ServicePage({ service }: { service: Service }) {
   const Icon = service.icon;
+  const relatedCaseStudies = caseStudies.filter((study) =>
+    study.relatedServiceSlugs.includes(service.slug),
+  );
   return (
     <main>
       <script
@@ -173,7 +177,10 @@ export function ServicePage({ service }: { service: Service }) {
           ))}
         </div>
       </Section>
-      <Section eyebrow="Why Pomvix" title="Experienced engineering for reliable, maintainable products.">
+      <Section
+        eyebrow="Why Pomvix"
+        title="Experienced engineering for reliable, maintainable products."
+      >
         <div className="mt-12 grid gap-5 md:grid-cols-3">
           {service.why.map((item) => (
             <div className="card p-7" key={item}>
@@ -195,6 +202,30 @@ export function ServicePage({ service }: { service: Service }) {
           ))}
         </div>
       </Section>
+      {relatedCaseStudies.length > 0 && (
+        <Section
+          eyebrow="Related case study"
+          title="See how similar systems are engineered in practice."
+          className="border-y border-white/[.06] bg-white/[.015]"
+        >
+          <div className="mt-10 grid gap-5 md:grid-cols-2">
+            {relatedCaseStudies.map((study) => (
+              <Link
+                href={`/case-studies/${study.slug}`}
+                className="card group p-7 transition hover:-translate-y-1 hover:border-indigo-300/40"
+                key={study.slug}
+              >
+                <p className="text-xs uppercase tracking-[.15em] text-mint">{study.badge}</p>
+                <h3 className="mt-4 text-xl">{study.subtitle}</h3>
+                <p className="mt-3 text-sm leading-7 text-slate-400">{study.excerpt}</p>
+                <span className="mt-6 inline-flex items-center gap-2 text-sm text-slate-400 group-hover:text-white">
+                  Read the case study <ArrowRight size={15} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Section>
+      )}
       <Section title="Choose the right next step.">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {services

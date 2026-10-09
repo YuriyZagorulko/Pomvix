@@ -62,6 +62,12 @@ docker compose up --build
 
 Visit `http://localhost:3000`. The API health check is available at `http://localhost:8000/health`, and Swagger at `/docs`.
 
+**Port conflicts:** If something else already uses `3000` or `8000` on your machine, copy
+`docker-compose.override.example.yml` to `docker-compose.override.yml` (gitignored). Compose
+merges it automatically on `docker compose up --build`. The template publishes the frontend on
+host **13471** and the API on **18471** while containers still listen on **3000** and **8000**
+internally. PostgreSQL is not published to the host in the default compose files.
+
 Without Docker:
 
 ```bash

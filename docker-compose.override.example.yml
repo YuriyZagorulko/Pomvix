@@ -1,0 +1,28 @@
+# Local port override template — NOT loaded automatically.
+#
+# Copy to docker-compose.override.yml (gitignored) so `docker compose up --build`
+# avoids conflicts when host ports 3000 / 8000 are already in use (e.g. another project):
+#
+#   cp docker-compose.override.example.yml docker-compose.override.yml
+#
+# Compose merges override.yml automatically. Internal container ports stay 3000 / 8000 / 5432.
+# Production uses docker-compose.prod.yml only — this file is never deployed.
+
+services:
+  backend:
+    ports: !override
+      - '18471:8000'
+    environment:
+      FRONTEND_URL: http://localhost:13471
+
+  frontend:
+    ports: !override
+      - '13471:3000'
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_SITE_URL: http://localhost:13471
+        NEXT_PUBLIC_API_URL: http://localhost:18471
+        NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-hello@pomvix.com}
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:18471
