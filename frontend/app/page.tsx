@@ -97,7 +97,7 @@ export default function Home() {
           </div>
         </div>
       </Section>
-      <section className="shell pb-32">
+      <section className="shell pb-32 md:py-16">
         <div className="card relative overflow-hidden p-10 md:p-16">
           <div className="orb absolute -right-10 -top-20 h-72 w-72 rounded-full bg-indigo-400/10 blur-3xl" />
           <div className="relative max-w-2xl">
