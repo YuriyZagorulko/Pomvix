@@ -50,6 +50,7 @@ services:
       NEXT_PUBLIC_SITE_URL: http://localhost:13471
       NEXT_PUBLIC_API_URL: http://localhost:18471
       NEXT_PUBLIC_CONTACT_EMAIL: ${NEXT_PUBLIC_CONTACT_EMAIL:-hello@pomvix.com}
+      NEXT_PUBLIC_OPENAI_PIXEL_ID: "${NEXT_PUBLIC_OPENAI_PIXEL_ID:-}"
       WATCHPACK_POLLING: 'true'
       CHOKIDAR_USEPOLLING: 'true'
 

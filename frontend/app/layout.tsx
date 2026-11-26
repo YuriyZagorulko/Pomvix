@@ -5,7 +5,10 @@ import type { ReactNode } from 'react';
 import './globals.css';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+import { openAiPixelInstallScript } from '@/lib/openai-pixel';
 import { getSiteUrl, siteConfig } from '@/lib/site';
+
+const openAiPixelScript = openAiPixelInstallScript(process.env.NEXT_PUBLIC_OPENAI_PIXEL_ID);
 
 const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
 
@@ -63,6 +66,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        {openAiPixelScript ? (
+          <script
+            id="openai-measurement-pixel"
+            dangerouslySetInnerHTML={{ __html: openAiPixelScript }}
+          />
+        ) : null}
         {/* Google Tag Manager */}
         <Script
           id="google-tag-manager"

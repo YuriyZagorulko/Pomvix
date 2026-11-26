@@ -1,12 +1,14 @@
 'use client';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Check, LoaderCircle } from 'lucide-react';
+import { measureLeadCreated, shouldMeasureLeadCreated } from '@/lib/openai-pixel';
 import { siteConfig } from '@/lib/site';
 export function ContactForm() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [attribution, setAttribution] = useState<Record<string, string>>({});
+  const leadMeasured = useRef(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -40,6 +42,10 @@ export function ContactForm() {
       const response = (await r.json().catch(() => ({}))) as { message?: string; detail?: string };
       if (!r.ok)
         throw new Error(response.detail || response.message || 'Unable to send your message.');
+      if (shouldMeasureLeadCreated({ responseOk: r.ok, alreadyMeasured: leadMeasured.current })) {
+        leadMeasured.current = true;
+        measureLeadCreated();
+      }
       setSuccessMessage(response.message || 'Your message has been received.');
       setState('success');
     } catch (error) {

@@ -29,6 +29,7 @@ services:
         NEXT_PUBLIC_SITE_URL: "${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}"
         NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost:8000}"
         NEXT_PUBLIC_CONTACT_EMAIL: "${NEXT_PUBLIC_CONTACT_EMAIL:-hello@pomvix.com}"
+        NEXT_PUBLIC_OPENAI_PIXEL_ID: "${NEXT_PUBLIC_OPENAI_PIXEL_ID:-}"
     environment:
       NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-http://localhost:8000}"
     depends_on:
