@@ -70,7 +70,7 @@ export default function GadgetoCaseStudyPage() {
               {study.badge}
             </span>
           </div>
-          <h1 className="text-4xl font-semibold md:text-6xl">{pageTitle}</h1>
+          <h1 className="display-title text-4xl font-semibold md:text-6xl">{pageTitle}</h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-400">
             Gadgeto is an e-commerce platform for electronics and computer equipment. The platform
             involves complex product catalog processing, supplier data normalization, and
@@ -385,7 +385,7 @@ export default function GadgetoCaseStudyPage() {
           <div className="orb absolute -right-10 -top-20 h-72 w-72 rounded-full bg-indigo-400/10 blur-3xl" />
           <div className="relative max-w-2xl">
             <p className="eyebrow mb-5">Similar engineering needs?</p>
-            <h2 className="text-3xl md:text-5xl">
+            <h2 className="display-title text-3xl md:text-5xl">
               Custom e-commerce, catalog automation, or complex integrations.
             </h2>
             <p className="mt-6 leading-7 text-slate-400">

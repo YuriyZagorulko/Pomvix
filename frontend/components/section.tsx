@@ -13,7 +13,9 @@ export function Section({
     <section className={`py-24 md:py-16 ${className}`}>
       <div className="shell">
         {eyebrow && <p className="eyebrow mb-5">{eyebrow}</p>}
-        <h2 className="max-w-3xl text-3xl font-semibold md:text-5xl">{title}</h2>
+        <h2 className="display-title mb-10 max-w-3xl text-3xl font-semibold md:mb-12 md:text-5xl">
+          {title}
+        </h2>
         {children}
       </div>
     </section>

@@ -180,7 +180,7 @@ function getWebGLContext(
     gl2 ||
     (canvas.getContext('webgl', params) as WebGLRenderingContext | null) ||
     (canvas.getContext('experimental-webgl', params) as WebGLRenderingContext | null);
-  if (!glOrNull) return null;
+  if (!glOrNull || glOrNull.isContextLost()) return null;
   const gl = glOrNull;
 
   let halfFloat: OES_texture_half_float | null = null;
@@ -190,11 +190,12 @@ function getWebGLContext(
     supportLinearFiltering = Boolean(gl2.getExtension('OES_texture_float_linear'));
   } else {
     halfFloat = gl.getExtension('OES_texture_half_float');
+    gl.getExtension('EXT_color_buffer_half_float');
     supportLinearFiltering = Boolean(gl.getExtension('OES_texture_half_float_linear'));
   }
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
-  const halfFloatTexType = gl2 ? gl2.HALF_FLOAT : halfFloat ? halfFloat.HALF_FLOAT_OES : 0;
+  let halfFloatTexType = gl2 ? gl2.HALF_FLOAT : halfFloat ? halfFloat.HALF_FLOAT_OES : gl.UNSIGNED_BYTE;
 
   function getSupportedFormat(
     internalFormat: number,
@@ -214,38 +215,73 @@ function getWebGLContext(
     format: number,
     type: number,
   ): boolean {
-    const texture = gl.createTexture()!;
-    gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, 4, 4, 0, format, type, null);
-    const fbo = gl.createFramebuffer()!;
-    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
-    return gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+    const texture = gl.createTexture();
+    const fbo = gl.createFramebuffer();
+    if (!texture || !fbo) return false;
+
+    let supported = false;
+    try {
+      // Drop a stale error from the previous probe before allocating.
+      gl.getError();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texImage2D(gl.TEXTURE_2D, 0, internalFormat, 4, 4, 0, format, type, null);
+      const allocError = gl.getError();
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+      supported =
+        allocError === gl.NO_ERROR &&
+        gl.checkFramebufferStatus(gl.FRAMEBUFFER) === gl.FRAMEBUFFER_COMPLETE;
+    } catch {
+      supported = false;
+    } finally {
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.bindTexture(gl.TEXTURE_2D, null);
+      gl.deleteFramebuffer(fbo);
+      gl.deleteTexture(texture);
+      gl.getError();
+    }
+    return supported && !gl.isContextLost();
   }
 
-  let formatRGBA: TextureFormat | null;
-  let formatRG: TextureFormat | null;
-  let formatR: TextureFormat | null;
-  if (gl2) {
-    formatRGBA = getSupportedFormat(gl2.RGBA16F, gl2.RGBA, halfFloatTexType);
-    formatRG = getSupportedFormat(gl2.RG16F, gl2.RG, halfFloatTexType);
-    formatR = getSupportedFormat(gl2.R16F, gl2.RED, halfFloatTexType);
-  } else {
-    formatRGBA = getSupportedFormat(gl.RGBA, gl.RGBA, halfFloatTexType);
-    formatRG = getSupportedFormat(gl.RGBA, gl.RGBA, halfFloatTexType);
-    formatR = getSupportedFormat(gl.RGBA, gl.RGBA, halfFloatTexType);
+  let formatRGBA: TextureFormat | null = null;
+  let formatRG: TextureFormat | null = null;
+  let formatR: TextureFormat | null = null;
+  if (halfFloatTexType !== gl.UNSIGNED_BYTE) {
+    if (gl2) {
+      formatRGBA = getSupportedFormat(gl2.RGBA16F, gl2.RGBA, halfFloatTexType);
+      formatRG = getSupportedFormat(gl2.RG16F, gl2.RG, halfFloatTexType);
+      formatR = getSupportedFormat(gl2.R16F, gl2.RED, halfFloatTexType);
+    } else {
+      formatRGBA = getSupportedFormat(gl.RGBA, gl.RGBA, halfFloatTexType);
+      formatRG = formatRGBA;
+      formatR = formatRGBA;
+    }
+  }
+
+  // Half-float color buffers are missing on some GPUs and software
+  // renderers. 8-bit RGBA is always a valid render target, so use it
+  // directly instead of probing again — a failed probe must not leave
+  // these null for initFramebuffers.
+  if (!formatRGBA || !formatRG || !formatR || gl.isContextLost()) {
+    if (gl.isContextLost()) return null;
+    halfFloatTexType = gl.UNSIGNED_BYTE;
+    supportLinearFiltering = true;
+    const rgba8: TextureFormat = { internalFormat: gl.RGBA, format: gl.RGBA };
+    formatRGBA = rgba8;
+    formatRG = rgba8;
+    formatR = rgba8;
   }
 
   return {
     gl,
     ext: {
-      formatRGBA: formatRGBA as TextureFormat,
-      formatRG: formatRG as TextureFormat,
-      formatR: formatR as TextureFormat,
+      formatRGBA,
+      formatRG,
+      formatR,
       halfFloatTexType,
       supportLinearFiltering,
     },
@@ -756,12 +792,14 @@ export default function SplashCursor({
     const displayMaterial = new Material(baseVertexShader, displayShaderSource);
 
     function initFramebuffers() {
-      const simRes = getResolution(config.SIM_RESOLUTION);
-      const dyeRes = getResolution(config.DYE_RESOLUTION);
-      const texType = ext.halfFloatTexType;
       const rgba = ext.formatRGBA;
       const rg = ext.formatRG;
       const r = ext.formatR;
+      if (!rgba || !rg || !r || gl.isContextLost()) return;
+
+      const simRes = getResolution(config.SIM_RESOLUTION);
+      const dyeRes = getResolution(config.DYE_RESOLUTION);
+      const texType = ext.halfFloatTexType;
       const filtering = ext.supportLinearFiltering ? gl.LINEAR : gl.NEAREST;
       gl.disable(gl.BLEND);
 
@@ -1379,8 +1417,9 @@ export default function SplashCursor({
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
 
-      // Release the WebGL context immediately.
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      // Do not call loseContext() here. React Strict Mode runs this cleanup
+      // and then the effect again on the same canvas, and a lost context
+      // makes every later format lookup come back null.
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

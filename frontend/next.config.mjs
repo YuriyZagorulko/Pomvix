@@ -4,6 +4,10 @@ const devApiConnectSrc =
     ? ` ${new URL(process.env.NEXT_PUBLIC_API_URL).origin}`
     : '';
 
+// Next.js dev compiles page code with eval(). Without this source, the dev
+// client never hydrates and click handlers, including accordions, never run.
+const devScriptSrc = process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : '';
+
 const nextConfig = {
   output: 'standalone',
   images: { formats: ['image/avif', 'image/webp'] },
@@ -21,7 +25,9 @@ const nextConfig = {
             key: 'Content-Security-Policy',
             value:
               "default-src 'self'; " +
-              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://bzrcdn.openai.com; " +
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://bzrcdn.openai.com" +
+              devScriptSrc +
+              '; ' +
               "style-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://fonts.googleapis.com; " +
               "img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.google.com https://fonts.gstatic.com https://bzr.openai.com; " +
               "font-src 'self' https://fonts.gstatic.com; " +

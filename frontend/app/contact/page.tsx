@@ -36,6 +36,7 @@ export default function Contact() {
             </a>
           </div>
         </aside>
+        <div className='grid pb-20'></div>
       </section>
     </main>
   );

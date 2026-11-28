@@ -56,6 +56,9 @@ body::before {
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
+.display-title {
+  line-height: 1.2 !important;
+}
 .gradient-text {
   background: linear-gradient(110deg, #f4f5ff 25%, var(--lavender) 65%, var(--mint));
   background-clip: text;
@@ -83,6 +86,7 @@ body::before {
   border: 1px solid var(--line);
   border-radius: 18px;
   background: linear-gradient(145deg, rgba(21, 32, 62, 0.86), rgba(11, 17, 38, 0.78));
+  interpolate-size: allow-keywords;
   transition:
     border-color 220ms ease,
     background-color 220ms ease,
@@ -92,9 +96,33 @@ body::before {
   border-color: rgba(169, 183, 255, 0.38);
   background-color: rgba(24, 36, 70, 0.88);
 }
-.accordion--open {
+.accordion[open] {
   border-color: rgba(149, 228, 206, 0.32);
   box-shadow: 0 14px 40px rgba(3, 7, 20, 0.18);
+}
+.accordion::details-content {
+  height: 0;
+  overflow: clip;
+  content-visibility: visible;
+  transition: height 360ms ease;
+}
+.accordion[open]::details-content {
+  height: auto;
+}
+.accordion__body {
+  visibility: hidden;
+  transition: visibility 360ms ease;
+}
+.accordion[open] > .accordion__body {
+  visibility: visible;
+}
+@supports not selector(::details-content) {
+  .accordion:not([open]) > .accordion__body {
+    display: none;
+  }
+  .accordion__body {
+    visibility: visible;
+  }
 }
 .accordion__summary {
   display: flex;
@@ -103,9 +131,19 @@ body::before {
   justify-content: space-between;
   gap: 20px;
   padding: 24px;
+  border: 0;
+  background: transparent;
   color: inherit;
+  font: inherit;
+  list-style: none;
   text-align: left;
   cursor: pointer;
+}
+.accordion__summary::-webkit-details-marker {
+  display: none;
+}
+.accordion__summary::marker {
+  content: '';
 }
 .accordion__summary:focus-visible {
   outline: 2px solid var(--mint);
@@ -119,39 +157,21 @@ body::before {
   flex: 0 0 auto;
   color: var(--lavender);
   transition:
-    transform 220ms ease,
-    color 220ms ease;
+    transform 360ms ease,
+    color 360ms ease;
 }
-.accordion--open .accordion__chevron {
+.accordion[open] .accordion__chevron {
   transform: rotate(180deg);
   color: var(--mint);
 }
-.accordion__body {
-  display: grid;
-  grid-template-rows: 0fr;
-  opacity: 0;
-  transition:
-    grid-template-rows 240ms ease,
-    opacity 240ms ease;
-}
-.accordion--open .accordion__body {
-  grid-template-rows: 1fr;
-  opacity: 1;
-}
 .accordion__inner {
-  min-height: 0;
-  overflow: hidden;
-  padding: 0 24px;
-  transition: padding 240ms ease;
-}
-.accordion--open .accordion__inner {
-  padding-bottom: 24px;
+  padding: 0 24px 24px;
 }
 @media (prefers-reduced-motion: reduce) {
   .accordion,
-  .accordion__chevron,
+  .accordion::details-content,
   .accordion__body,
-  .accordion__inner {
+  .accordion__chevron {
     transition-duration: 0.01ms;
   }
 }

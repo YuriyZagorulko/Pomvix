@@ -10,7 +10,7 @@ export function Hero() {
       <div className="shell relative">
         <div className="max-w-4xl reveal">
           <p className="eyebrow mb-7">Custom Software Development for Your Business</p>
-          <h1 className="text-5xl font-semibold leading-[1.04] md:text-8xl">
+          <h1 className="display-title text-5xl font-semibold md:text-8xl">
             We build software that <span className="gradient-text">helps your business grow.</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-slate-400 md:text-xl">

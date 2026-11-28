@@ -238,7 +238,7 @@ export default function About() {
       <section className="shell pb-24 md:pb-32">
         <div className="card p-7 sm:p-10 md:p-14">
           <p className="eyebrow">Start with a conversation</p>
-          <h2 className="mt-5 max-w-2xl text-3xl font-semibold md:text-5xl">
+          <h2 className="display-title mt-5 max-w-2xl text-3xl font-semibold md:text-5xl">
             Tell me what you’re building.
           </h2>
           <p className="mt-6 max-w-2xl leading-8 text-slate-400">

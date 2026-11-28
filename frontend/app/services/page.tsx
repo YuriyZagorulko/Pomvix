@@ -80,7 +80,7 @@ export default function Services() {
           <div className="orb absolute -right-10 -top-20 h-72 w-72 rounded-full bg-indigo-400/10 blur-3xl" />
           <div className="relative max-w-2xl">
             <p className="eyebrow mb-5">Have a challenge?</p>
-            <h2 className="text-4xl md:text-6xl">Let’s find the clearest way forward.</h2>
+            <h2 className="display-title text-4xl md:text-6xl">Let’s find the clearest way forward.</h2>
             <p className="mt-6 max-w-lg leading-7 text-slate-400">
               Tell us what you’re building and what is getting in the way. We’ll help you identify a
               sensible next step.
